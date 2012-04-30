@@ -1,0 +1,9 @@
+#display-container {
+  border: solid 1px #ccc;
+}
+
+#display-frame {
+  -webkit-animation-duration: 5s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+}

@@ -1,0 +1,3 @@
+To run this tool, it'll need to be served from a web origin, not a file:/// one. Many file APIs don't work from file:/// origins (see http://crbug.com/91136 and http://crbug.com/60889).
+
+On Mac OS X, the easiest way to do this is to enable the built-in Apache server (System Preferences -> Sharing -> Web Sharing) and then create a symlink from /Library/WebServer/Documents to this directory.
