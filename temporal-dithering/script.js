@@ -134,6 +134,9 @@ onload = function() {
   document.querySelector('#lenna-source-image').onclick = function() {
     updateSourceImage('lenna.jpg');
   };
+  document.querySelector('#gray-source-image').onclick = function() {
+    updateSourceImage('gray.png');
+  };
   document.querySelector('#file-source-image').onclick = function() {
     var fileInput = document.createElement('input');
     fileInput.type = 'file';
