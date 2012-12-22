@@ -76,6 +76,11 @@ function processImage(image) {
     var dataUrl = displayCanvas.toDataURL();
 
     frameImage.src = dataUrl;
+    // Force the image to have its own compositing layer. This appears to help
+    // on iOS, but not on desktop Chrome.
+    if (navigator.platform.match(/^(iPad|iPhone|iPod)/)) {
+      frameImage.style.webkitTransform = 'translateZ(0)';
+    }
 
     displayContainer.innerHTML = '';
     var displayImage = document.createElement('img');
