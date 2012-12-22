@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <title>Screenshot-proof images via temporal dithering</title>
+  <link rel="stylesheet" href="styles.css" type="text/css">
+  <script src="script.js"></script>
+</head>
+<body>
+
+<h1>Screenshot-proof images via temporal dithering</h1>
+<div id="byline">
+  by <a href="http://persistent.info">Mihai Parparita</a>
+  -
+  <a href="https://github.com/mihaip/web-experiments">Source</a>
+<div>
+
+<p>Proof of concept of a simple technique to make screen capture of sensitive
+images more difficult via
+<a href="http://en.wikipedia.org/wiki/Dither#Applications">temporal dithering</a>.
+Out of the source image two frames are generated, one with pixel values offset
+by a random amount (a different amount per RGB component) and another with the
+offset negated. By rapidly alternating between the two frames, the appearance of
+the original image is approximated, but a static screenshot would result in
+only one of the (significantly degraded) frames being captured.</p>
+
+<table id="controls">
+  <tr>
+    <td class="label">
+      Source image:
+    </td>
+    <td>
+      <button id="mihai-source-image">Mihai</button>
+      <button id="lenna-source-image">Lenna</button>
+      <button id="file-source-image">File...</button>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="label">
+      <label for="tile-size">Tile size:</label>
+    </td>
+    <td>
+      <input type="range" value="3" min="1" max="10" id="tile-size">
+      <span id="tile-size-display"></span> pixels
+    </td>
+  </tr>
+
+  <tr>
+    <td></td>
+    <td><div class="explanation">
+      To prevent solid color areas of the image from being displayed too
+      uniformly, the image is broken up into tiles of this size and all pixels
+      within a tile are either lightened or darkened.</div></td>
+  </tr>
+
+  <tr>
+    <td class="label">
+      <label for="overflow">Overflow factor:</label>
+    </td>
+    <td>
+      <input type="range" value="1.5" min="1.0" max="3.0" step="0.1" id="overflow">
+      <span id="overflow-display"></span>x
+    </td>
+  </tr>
+
+  <tr>
+    <td></td>
+    <td><div class="explanation">Allow positive or negative offsets to go above/below the 0/255 clamp value by this fraction (greater values result in more noise, but the dithered image is further away from the original).</div></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td id="source-display">
+    </td>
+    <td>
+      <div id="frame-container">
+        <img id="positive-frame" class="frame">
+        <img id="negative-frame" class="frame">
+      </div>
+  </tr>
+  <tr>
+    <td>
+      Source
+    </td>
+    <td>
+      Temporal dithering
+    </td>
+  </tr>
+  <tr>
+    <td id="positive-display">
+    </td>
+    <td id="negative-display">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Positive frame
+    </td>
+    <td>
+      Negative frame
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

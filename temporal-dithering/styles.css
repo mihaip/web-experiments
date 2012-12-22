@@ -1,0 +1,54 @@
+body {
+  font-family: Helvetica, Arial, san-serif;
+  font-size: 13px;
+  color: #000;
+  background: #fff;
+}
+
+h1 {
+  margin: 0;
+}
+
+#byline {
+  margin-bottom: 1em;
+}
+
+p {
+  max-width: 50em;
+}
+
+#controls {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+#controls td {
+  padding: 0;
+}
+
+#controls .label {
+  text-align: right;
+  padding-right: 2px;
+}
+
+#controls .explanation {
+  color: #999;
+  font-size: 90%;
+  padding-bottom: 5px;
+  max-width: 30em;
+}
+
+#frame-container {
+  position: relative;
+}
+
+.frame {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#negative-frame {
+  z-index: -1;
+}
