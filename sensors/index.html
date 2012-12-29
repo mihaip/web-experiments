@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<title>Device motion and orientation sensors</title>
+	<style>
+	  body {
+	    margin: 0;
+	    padding: 5px;
+	    line-height: 0;
+	    font-size: 0;
+	  }
+	  
+	  h1 {
+	    position: absolute;
+	    bottom: 0;
+	    right: 0;
+	    margin: 0;
+	    padding: 5px;
+	    background: #eee;
+	    border-top: solid 1px #ccc;
+	    border-left: solid 1px #ccc;
+	    -webkit-border-radius: 10px 0 0 0;
+	    -moz-border-radius: 10px 0 0 0;
+	    border-radius: 10px 0 0 0;
+	    font: 20px Helvetica;
+	    font-weight: bold;
+	    color: #999;
+	  }
+	  
+	  canvas {
+	    border: solid 1px #eee;
+	    margin: 5px;
+	  }
+
+    /* On the iPhone 4, have the graphs use 1 screen pixel per canvas pixel */
+    @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+      body {
+        padding: 2px;
+      }
+      
+      canvas {
+        width: 150px;
+        height: 100px;
+        margin: 2px;
+      }
+      
+      h1 {
+        font-size: 12px;
+        padding: 2px;
+      }
+    }
+	</style>
+</head>
+<body>
+
+<h1>DeviceOrientation Sensors</h1>
+
+<script>
+  addEventListener(
+      'devicemotion',
+      function(event) {
+          if (event.acceleration) {
+            plot(event.acceleration.x, 'acceleration.x');
+            plot(event.acceleration.y, 'acceleration.y');
+            plot(event.acceleration.z, 'acceleration.z');
+          } else {
+            plot(event.accelerationIncludingGravity.x, 'accelerationIncludingGravity.x');
+            plot(event.accelerationIncludingGravity.y, 'accelerationIncludingGravity.y');
+            plot(event.accelerationIncludingGravity.z, 'accelerationIncludingGravity.z');          
+          }
+      },
+      false);
+  addEventListener(
+      'deviceorientation',
+      function(event) {
+        plot(event.alpha, 'alpha');
+        plot(event.beta, 'beta');
+        plot(event.gamma, 'gamma');
+      },
+      false);
+
+  // Give desktops something to do.
+  addEventListener(
+      'mousemove',
+      function(event) {
+        plot(event.clientX, 'mouse.clientX');
+        plot(event.clientY, 'mouse.clientY');
+      },
+      false);        
+
+  var buffers = {};
+  var graphs = {};
+  
+  var GRAPH_WIDTH = 300;
+  var GRAPH_HEIGHT = 200;
+  
+  function round(value) {
+    return Math.round(value * 100)/100;
+  }
+
+  function plot(value, id) {
+    if (!(id in buffers)) {
+      buffers[id] = [];
+      var canvasNode = document.createElement('canvas');
+      canvasNode.width = GRAPH_WIDTH;
+      canvasNode.height = GRAPH_HEIGHT;
+      document.body.appendChild(canvasNode);
+      graphs[id] = canvasNode.getContext('2d');
+      graphs[id].lineWidth = 1.0;
+      graphs[id].font = '12px Helvetica';
+      graphs[id].strokeStyle = '#000';  
+    }
+
+    var buffer = buffers[id];
+    var graph = graphs[id];
+    
+    buffer.push(value);
+    if (buffer.length == GRAPH_WIDTH) {
+      buffer.shift();
+    }
+    
+    graph.clearRect(0, 0, GRAPH_WIDTH, GRAPH_HEIGHT);
+    graph.textAlign = 'end';
+    graph.fillStyle = '#aaa'; 
+    graph.fillText(id, GRAPH_WIDTH - 2, 12);
+    
+    if (buffer.length <= 1) {
+      return;
+    }
+
+    var min = Number.MAX_VALUE;
+    var max = -Number.MAX_VALUE;
+    
+    for (var i = 0; i < buffer.length; i++) {
+      var value = buffer[i];
+      if (value < min) min = value;
+      if (value > max) max = value;
+    }
+    
+    graph.beginPath();
+    var scale = GRAPH_HEIGHT/(max - min);
+    for (var i = 0; i < buffer.length; i++) {
+      var value = buffer[buffer.length - 1 - i];
+      var x = GRAPH_WIDTH - i;
+      var y = GRAPH_HEIGHT - (value - min) * scale;
+      if (i == 0) {
+        graph.moveTo(x, y);
+      } else {
+        graph.lineTo(x, y);
+      }
+    }
+    graph.stroke();
+
+    graph.textAlign = 'start';
+    graph.fillStyle = '#666';  
+    graph.fillText(round(min), 2, GRAPH_HEIGHT - 2);
+    graph.fillText(round(max), 2, 10);
+  }
+</script>
+
+</body>
+</html>
