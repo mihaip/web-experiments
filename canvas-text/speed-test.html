@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <title>Image rendering test</title>
+  <style type="text/css">
+   canvas {
+    border: solid 1px #ccc;
+   }
+   
+   #logo {
+    position: absolute;
+    top: 0;
+    left: -3000px;
+   }
+   
+   input {
+    display: block;
+   }
+  </style>
+  <script type="text/javascript">
+  
+  function getContext(id) {
+    return document.getElementById(id).getContext("2d"); 
+  }
+  
+  function run() {
+    var image = new Image();
+    image.onload = function() {
+      runTests(image);
+    }
+    image.src = "http://persistent.info/files/canvas-text/font.png";
+  }
+  
+  function runTests(image) {
+    var out = document.getElementById("out");
+    
+    // drawImage with image
+    var imageTestContext = getContext("image-test-canvas");
+    var start = new Date().getTime();
+    
+    for (var i=0; i < 50; i++) {
+      imageTestContext.drawImage(image, 0, 0);
+    }
+    
+    var end = new Date().getTime();
+    
+    out.innerHTML += "drawImage w/ image: " + (end - start) + "\n\r";
+    
+    // drawImage with canvas
+    var canvasTestContext = getContext("canvas-test-canvas");
+    
+    var imageCanvas = document.createElement("canvas");
+    imageCanvas.width = 512;
+    imageCanvas.height = 512;
+    imageCanvas.getContext("2d").drawImage(image, 0, 0);
+    
+    start = new Date().getTime();
+    
+    for (var i=0; i < 50; i++) {
+      canvasTestContext.drawImage(imageCanvas, 0, 0);
+    }
+    
+    var end = new Date().getTime();
+    
+    out.innerHTML += "drawImage w/ canvas: " + (end - start) + "\n\r";
+    
+    // pattern w/ image
+    var patternTestContext = getContext("pattern-test-canvas");
+    
+    var pattern = patternTestContext.createPattern(image, "no-repeat");
+    patternTestContext.fillStyle = pattern;
+    
+    start = new Date().getTime();
+    
+    for (var i=0; i < 50; i++) {
+      patternTestContext.fillRect(0, 0, 512, 512);
+    }
+    
+    var end = new Date().getTime();
+    
+    out.innerHTML += "fillRect w/ pattern w/ image: " + (end - start) + "\n\r";
+
+    // pattern w/ canvas
+    try {
+      var patternCanvasTestContext = getContext("pattern-test-canvas");
+      
+      var patternCanvas = document.createElement("canvas");
+      patternCanvas.width = 512;
+      patternCanvas.height = 512;
+      patternCanvas.getContext("2d").drawImage(image, 0, 0);
+  
+      var pattern = patternCanvasTestContext.createPattern(patternCanvas, "no-repeat");
+      patternCanvasTestContext.fillStyle = pattern;
+      
+      start = new Date().getTime();
+      
+      for (var i=0; i < 50; i++) {
+        patternCanvasTestContext.fillRect(0, 0, 512, 512);
+      }
+      
+      var end = new Date().getTime();
+    
+      out.innerHTML += "fillRect w/ pattern w/ canvas: " + (end - start) + "\n\r";
+    } catch (e) {
+      out.innerHTML += "fillRect w/ pattern w/ canvas: err\n\r";    
+    }
+    
+    
+
+  }
+  
+  </script>
+</head>
+<body>
+<canvas id="image-test-canvas" width="512" height="512"></canvas>
+<canvas id="canvas-test-canvas" width="512" height="512"></canvas>
+<canvas id="pattern-test-canvas" width="512" height="512"></canvas>
+<canvas id="pattern-canvas-test-canvas" width="512" height="512"></canvas>
+<input type="button" onclick="run()" value="Run Tests">
+
+<pre id="out"></pre>
+
+</body>
+</html>
