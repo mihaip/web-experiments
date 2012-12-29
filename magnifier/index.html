@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+        "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>Magnifier</title>
+	<style type="text/css">
+		body
+		{
+			margin: 0;
+			padding: 0;
+		}
+
+		#info
+		{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			text-align: center;
+			padding: 10px;
+			font-family: Trebuchet MS, Verdana, sans-serif;
+			background-color: #eee;
+			border-bottom: solid 1px #ccc;
+		}
+
+		#binding
+		{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			padding: 0;
+			margin-left: -253px;
+			margin-top: -300px;
+		}
+
+		.magnifier
+		{
+			position: absolute;
+			border: solid 1px #000;
+			cursor: move;
+			background-repeat: no-repeat;
+			background-color: #fff;
+
+		}
+
+		.magnifierShadow
+		{
+			position: absolute;
+			background: transparent;
+			padding: 0;
+			margin: 0;
+		}
+
+		.magnifierController
+		{
+			color: #999;
+			font-family: Trebuchet MS, Verdana, sans-serif;
+			font-size: 10pt;
+		}
+
+		.magnifierControllerContainer
+		{
+			padding: 10px;
+		}
+
+		.magnifierControllerPrefix
+		{
+			color: #111;
+		}
+
+		.magnifierControllerButton
+		{
+			color: #666;
+			cursor: pointer; cursor: hand;
+			background-color: #eee;
+			border: solid 1px #ddd;
+			padding: 0px 4px 0px 4px;
+			/*text-shadow: dimgray 0px 0px 3px;*/
+		}
+
+		.magnifierControllerButtonSelected
+		{
+			background-color: #ccc;
+			border: solid 1px #aaa;
+			color: #333;
+			font-weight: bold;
+			cursor: pointer; cursor: hand;
+			padding: 0px 4px 0px 4px;
+			/*text-shadow: dimgray 0px 0px 3px;*/
+		}
+	</style>
+	<script type="text/javascript">
+		var kShadowPadding = 17;
+
+		var kDefaultMagnifierSize = 2; // index into the arrays below
+
+		var kMagnifierSizes = new Array(0, 100, 150, 300);
+		var kMagnifierSizeNames = new Array('off', 'small', 'medium', 'large');
+
+		var kControllerPrefix = 'magnifier:&nbsp;';
+
+
+		function MagnifierPosition()
+		{
+			this.style.left = Math.round(this.xPosition - 1 - this.size/2) + "px"; // -1 to account for the border
+			this.style.top = Math.round(this.yPosition - 1 - this.size/2) + "px";
+
+			this.shadow.style.left = Math.round(this.xPosition - this.size/2 - kShadowPadding) + "px";
+			this.shadow.style.top = Math.round(this.yPosition - this.size/2 - kShadowPadding) + "px";
+
+			var magnifierCenterX = Math.round(this.xPosition * this.xMultiplier - this.size/2);
+			var	magnifierCenterY = Math.round(this.yPosition * this.yMultiplier - this.size/2);
+
+			this.style.backgroundPosition = -magnifierCenterX + "px " +
+											-magnifierCenterY + "px";
+		}
+
+		function ControllerSizeButtonClick(event)
+		{
+			if (!event) event = window.event;
+
+			var button = event.currentTarget || event.srcElement;
+
+			button.parentNode.magnifier.resize(button.magnifierSize);
+		}
+
+		function MagnifierResize(size)
+		{
+			this.size = kMagnifierSizes[size];
+
+			for (var i=0; i < this.controller.sizeButtons.length; i++)
+			{
+				if (i == size)
+					this.controller.sizeButtons[i].className = "magnifierControllerButtonSelected";
+				else
+					this.controller.sizeButtons[i].className = "magnifierControllerButton";
+			}
+
+			if (this.size == 0)
+			{
+				this.shadow.style.display = "none";
+				this.style.display = "none";
+			}
+			else
+			{
+				var shadow = this.shadow;
+				var shadowSize = this.size + 2 * kShadowPadding;
+
+				// MSIE 5.x/6.x must be treated specially in order to make them use the PNG alpha channel
+				var shadowImageSrc = "shadow" + size + ".png";
+				if (shadow.runtimeStyle)
+					shadow.runtimeStyle.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" +
+											     shadowImageSrc +
+												 "', sizingMethod='scale')";
+				else
+					shadow.style.backgroundImage = "url(" + shadowImageSrc + ")";
+				shadow.style.width = shadowSize + "px";
+				shadow.style.height = shadowSize + "px";
+				shadow.style.display = "block";
+
+				if (this.runtimeStyle) // msie counts the border as being part of the width
+					this.size += 2; // must compensate
+
+				this.style.width = this.size + "px";
+				this.style.height = this.size + "px";
+				this.style.display = "block";
+				this.position();
+			}
+		}
+
+		function MagnifierMouseDown(event)
+		{
+			if (!event) event = window.event;
+
+			document.body.magnifier = this;
+			this.inDrag = true;
+			if (event.pageX)
+			{
+				this.startX = event.pageX;
+				this.startY = event.pageY;
+			}
+			else if (event.clientX)
+			{
+				this.startX = event.clientX;
+				this.startY = event.clientY;
+			}
+			else
+			{
+				alert("don't know how to get position out of event");
+				return;
+			}
+			this.savedCursor = this.style.cursor;
+			this.style.cursor = "crosshair";
+		}
+
+		function MagnifierMouseUp()
+		{
+			if (this.inDrag)
+			{
+				this.inDrag = false;
+				this.style.cursor = this.savedCursor;
+				document.body.magnifier = null;
+			}
+		}
+
+		function MagnifierDrag(event)
+		{
+			if (!event) event = window.event;
+			var magnifier = this.magnifier; // we're actually in the body's onmousemove handler
+
+			if (magnifier && magnifier.inDrag)
+			{
+				var eventX;
+				var eventY;
+
+				if (event.pageX)
+				{
+					eventX = event.pageX;
+					eventY = event.pageY;
+				}
+				else if (event.clientX)
+				{
+					eventX = event.clientX;
+					eventY = event.clientY;
+				}
+				else
+				{
+					return;
+				}
+
+				magnifier.xPosition += eventX - magnifier.startX;
+				magnifier.yPosition += eventY - magnifier.startY;
+
+				magnifier.startX = eventX;
+				magnifier.startY = eventY;
+
+				magnifier.position();
+			}
+		}
+
+		function loadMagnifier(baseID, zoomedURL, zoomedWidth, zoomedHeight)
+		{
+			// get the zoomed image (load as early as possible)
+			var zoomedImage = document.createElement("img");
+			zoomedImage.src = zoomedURL;
+
+			// get the div's
+			var base = document.getElementById(baseID);
+			var magnifier = document.createElement("div");
+
+			// get the regular image
+			var normalImage = null;
+			for (var i=0; i < base.childNodes.length; i++)
+			{
+				if (base.childNodes[i].tagName &&
+					base.childNodes[i].tagName.toLowerCase() == "img")
+				{
+					normalImage = base.childNodes[i];
+					break;
+				}
+			}
+
+			if (normalImage == null)
+			{
+				alert("couldn't find normal image for magnifier " + baseID);
+				return;
+			}
+
+			magnifier.xMultiplier = zoomedWidth/normalImage.width;
+			magnifier.yMultiplier = zoomedHeight/normalImage.height;
+
+			magnifier.size = kMagnifierSizes[kDefaultMagnifierSize];
+			magnifier.xPosition = normalImage.width - magnifier.size/2 - 20;
+			magnifier.yPosition = normalImage.height - magnifier.size/2 + 30;
+
+			magnifier.id = baseID + "Magnifier";
+			magnifier.className = "magnifier";
+
+			// styles (only dynamic ones, rest are part of the class)
+			magnifier.style.backgroundImage = "url(" + zoomedURL + ")";
+
+			// functions
+			magnifier.onmousedown = MagnifierMouseDown;
+			magnifier.onmouseup = MagnifierMouseUp;
+			document.body.onmousemove = MagnifierDrag; // we attach this handler to the body because if the user moves
+													   // the mouse fast enough, it'll go outside the boundaries of the
+													   // magnifier, and then the magnifier's mousemove handler won't fire
+
+			magnifier.position = MagnifierPosition;
+			magnifier.resize = MagnifierResize;
+
+			// controller
+			var controller = document.createElement("span");
+
+			controller.id = baseID + "MagnifierController";
+			controller.className = "magnifierController";
+
+			var controllerPrefix = document.createElement("span");
+			controllerPrefix.innerHTML = kControllerPrefix;
+
+			controllerPrefix.className = "magnifierControllerPrefix";
+			controller.appendChild(controllerPrefix);
+
+			controller.sizeButtons = new Array(kMagnifierSizes.length);
+
+			for (var i=0; i < kMagnifierSizes.length; i++)
+			{
+				var button = document.createElement("span");
+				button.innerHTML = kMagnifierSizeNames[i];
+				button.className = "magnifierControllerButton";
+				button.onclick = ControllerSizeButtonClick;
+				button.magnifierSize = i;
+
+				controller.sizeButtons[i] = button;
+				controller.appendChild(button);
+			}
+
+			// shadow
+			var shadow = document.createElement("div");
+
+			shadow.id = baseID + "MagnifierShadow";
+			shadow.className = "magnifierShadow";
+
+			// point objects at each other
+			magnifier.controller = controller;
+			controller.magnifier = magnifier;
+			magnifier.shadow = shadow;
+
+			// add to document and lay out
+
+			var controllerContainer = document.createElement("div");
+
+			controllerContainer.className = "magnifierControllerContainer";
+
+			controllerContainer.appendChild(controller);
+
+			base.insertBefore(controllerContainer, document.getElementById("message"));
+			base.appendChild(shadow);
+			base.appendChild(magnifier);
+			magnifier.resize(kDefaultMagnifierSize); // also positions
+		}
+	</script>
+</head>
+<body>
+
+<div id="info">More information about this effect is available in <a href="http://persistent.info/archives/2004/05/08/magnifier">this
+entry</a>.</div>
+
+<div id="binding">
+	<img src="normal.jpg" width="457" height="600" alt="Book Binding" id="baseImage" />
+</div>
+
+<script type="text/javascript">
+	loadMagnifier("binding", "zoomed.jpg", 1713, 2250);
+</script>
+
+</body>
+</html>
