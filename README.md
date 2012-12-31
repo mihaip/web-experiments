@@ -20,7 +20,7 @@ Various prototypes, experiments and proofs of concept that have appeared on [per
   * [Screencast](http://www.youtube.com/watch?v=9vy44EEaHwY)
   * [Source](https://github.com/mihaip/web-experiments/tree/master/skipped-frames-puzzler)
   * [Blog post](http://blog.persistent.info/2010/11/chrome-performance-puzzler.html)
-* Replicating Flipboard's "page fold" animation - August 2010_
+* Replicating Flipboard's "page fold" animation - _August 2010_
   * [Demo](http://persistent.info/web-experiments/flipboard/)
   * [Screencast](http://www.youtube.com/watch?v=Z0E5ITIuUlQ)
   * [Source](https://github.com/mihaip/web-experiments/tree/master/flipboard)
@@ -29,7 +29,7 @@ Various prototypes, experiments and proofs of concept that have appeared on [per
   * [Demo](http://persistent.info/web-experiments/canvas-text/)
   * [Source](https://github.com/mihaip/web-experiments/tree/master/canvas-text)
   * [Blog post](http://blog.persistent.info/2006/02/rendering-text-inside-canvas-object.html)
-* data: URL-based palette animation - July 2005_
+* data: URL-based palette animation - _July 2005_
   * [Demo](http://persistent.info/web-experiments/data-url-animation/)
   * [Source](https://github.com/mihaip/web-experiments/tree/master/data-url-animation)
   * [Blog post](http://blog.persistent.info/2005/07/data-url-based-animation.html)
