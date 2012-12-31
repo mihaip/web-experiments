@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>flipboard</title>
+	<script src="closure-lite.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="flipboard.css">
+	<script src="flipboard.js"></script>
+
+	<style>
+	  body {
+	    background: #eee;
+	    font-family: Lucida Grande, Helvetica, Arial, sans-serif;
+	  }
+	  
+	  #loading {
+	    color: #999;
+	    font-size: 18px;
+	    font-weight: bold;
+	    position: absolute;
+	    top: 50%;
+	    left: 0;
+	    width: 100%;
+	    text-align: center;
+	  }
+	  
+	  #button-container {
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    right: 0;
+	    background: #fff;
+	    border-bottom: solid 1px #ccc;
+	    padding: .75em;
+	    text-align: center;
+	  }
+	  
+	  #button-container button {
+	    padding: 1em;
+	    width: 9em;
+	    border: solid 1px #ccc;
+	    -webkit-border-radius: 4px;
+	    -moz-border-radius: 4px;
+	    background: #ddd;
+	    font-weight: bold;
+	    color: #333;
+	    cursor: pointer;
+	  }
+	  
+	  #button-container button:disabled {
+	    background: #eee;
+	    border-color: #ddd;
+	    color: #aaa;
+	    cursor: default;
+	  }
+	  
+	  .news-item {
+	    background: #fff;
+	    width: 400px;
+	    height: 400px;
+	  }
+	  
+	  .news-item img {
+	    border: 0;
+	  }
+	</style>
+	
+	<script>
+	  var flipSet;
+	  var previousButtonNode;
+	  var nextButtonNode;
+	  
+	  function init() {
+	    if (document.location.hash == '#creases') {
+	      goog.dom.classes.add(document.body, 'creases');
+	    }
+	    getFlipSet(function(newFlipSet) {
+	      flipSet = newFlipSet;
+        previousButtonNode = goog.dom.$('previous-button');
+        nextButtonNode = goog.dom.$('next-button');
+        updateButtonState();
+        
+        goog.events.listen(
+            previousButtonNode,
+            goog.events.EventType.CLICK,
+            function() {
+              flipSet.previous();
+              updateButtonState();
+            });
+  
+        goog.events.listen(
+            nextButtonNode,
+            goog.events.EventType.CLICK,
+            function() {
+              flipSet.next();
+              updateButtonState();
+            });	    
+	    });
+    }
+    
+    function getFlipSet(callback) {
+      var id = document.location.search ? document.location.search.substring(1) : 'news';
+      
+      if (id == 'images') {
+        var image1Node = goog.dom.$dom('img', {
+            'src': 'image1.png',
+            'width': '400',
+            'height': '600',
+            'alt': '',
+            'hspace': '0',
+            'vspace': '0'
+          });
+        var image2Node = goog.dom.$dom('img', {
+            'src': 'image2.png',
+            'width': '400',
+            'height': '600',
+            'alt': '',
+            'hspace': '0',
+            'vspace': '0'
+          });      
+        callback(new FlipSet(
+                400,
+                600, [
+                  image1Node,
+                  image2Node,
+                  image1Node,
+                  image2Node,
+                  image1Node,
+                  image2Node
+                ]));
+        return;
+      }
+      
+      if (id == 'news') {
+        window.newsCallback = function(data) {
+          var nodes = [];
+          
+          for (var i = 0, item; item = data.items[i]; i++) {
+            var node = goog.dom.$dom('div', 'news-item');
+            
+            var content = item.summary || item.body;
+            node.innerHTML = content.content;
+            
+            nodes.push(node);
+          }
+          
+          callback(new FlipSet(400, 400, nodes)); 
+        };
+        var scriptNode = goog.dom.$dom('script', {
+          'type': 'text/javascript',
+          'src': 'http://www.google.com/reader/public/javascript/feed/' +
+              'http://news.google.com/news%3Fpz%3D1%26cf%3Dall%26ned%3Dus%26hl%3Den%26output%3Drss' +
+              '?full=true' +
+              '&callback=newsCallback' +
+              '&n=250'
+        });
+        
+        document.getElementsByTagName('head')[0].appendChild(scriptNode);
+        return;
+      }
+    }
+    
+    function updateButtonState() {
+      previousButtonNode.disabled = !flipSet.canGoPrevious();
+      nextButtonNode.disabled = !flipSet.canGoNext();
+    }
+	</script>
+</head>
+<body onload="init()">
+  <div id="button-container">
+    <button id="previous-button" disabled>Previous</button>
+    <button id="next-button">Next</button>
+  </div>
+  
+  <div id="loading">Loading...</div>
+</body>
+</html>

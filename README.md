@@ -20,6 +20,11 @@ Various prototypes, experiments and proofs of concept that have appeared on [per
   * [Screencast](http://www.youtube.com/watch?v=9vy44EEaHwY)
   * [Source](https://github.com/mihaip/web-experiments/tree/master/skipped-frames-puzzler)
   * [Blog post](http://blog.persistent.info/2010/11/chrome-performance-puzzler.html)
+* Replicating Flipboard's "page fold" animation - August 2010_
+  * [Demo](http://persistent.info/web-experiments/flipboard/)
+  * [Screencast](http://www.youtube.com/watch?v=Z0E5ITIuUlQ)
+  * [Source](https://github.com/mihaip/web-experiments/tree/master/flipboard)
+  * [Blog post](http://blog.persistent.info/2010/08/replicating-flipboards-page-fold.html)
 * Rendering text in `<canvas>` via font textures - _Feburary 2006_
   * [Demo](http://persistent.info/web-experiments/canvas-text/)
   * [Source](https://github.com/mihaip/web-experiments/tree/master/canvas-text)
