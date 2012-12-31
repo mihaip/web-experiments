@@ -1,0 +1,26 @@
+TODO
+
+DONE
+- image datasource
+- scale points modifier (shift? and use option for decay?)
+- grid checkbox
+- point checkbox
+- make tile size selectable
+- prevent convex quads
+- gradient as background?
+- only recompute matrices that actually need it
+- url datasource
+- video datasrouce
+- "overscan" to avoid seams
+- catch click events (for url datasource?)
+- help bubble to mention option and shift modifier
+- permalinks for datasources
+- ipad support
+- make datasources cacheable
+- warning when missing WebKitCSSMatrix and/or 3d transforms
+
+LATER
+- shapshots that can be restored (with transitions)
+- permalinks for distortions
+- prevent scrolling when dragging points down
+- basic Firefox 4.0 support

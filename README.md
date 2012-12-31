@@ -10,6 +10,10 @@ Various prototypes, experiments and proofs of concept that have appeared on [per
   * [Demo](http://persistent.info/web-experiments/sensors/)
   * [Source](https://github.com/mihaip/web-experiments/tree/master/sensors)
   * [Blog post](http://blog.persistent.info/2010/12/visualizing-deviceorientation-events.html)
+* Distortion grid using CSS 3D transforms - _November 2010_
+  * [Demo](http://persistent.info/web-experiments/distortion/)
+  * [Source](https://github.com/mihaip/web-experiments/tree/master/distortion)
+  * [Blog post](http://blog.persistent.info/2010/11/distortion-grid-using-css-3d-transforms.html)
 * Rendering text in `<canvas>` via font textures - _Feburary 2006_
   * [Demo](http://persistent.info/web-experiments/canvas-text/)
   * [Source](https://github.com/mihaip/web-experiments/tree/master/canvas-text)
