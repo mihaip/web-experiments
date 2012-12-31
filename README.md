@@ -29,6 +29,10 @@ Various prototypes, experiments and proofs of concept that have appeared on [per
   * [Demo](http://persistent.info/web-experiments/canvas-text/)
   * [Source](https://github.com/mihaip/web-experiments/tree/master/canvas-text)
   * [Blog post](http://blog.persistent.info/2006/02/rendering-text-inside-canvas-object.html)
+* data: URL-based palette animation - July 2005_
+  * [Demo](http://persistent.info/web-experiments/data-url-animation/)
+  * [Source](https://github.com/mihaip/web-experiments/tree/master/data-url-animation)
+  * [Blog post](http://blog.persistent.info/2005/07/data-url-based-animation.html)
 * CSS/DOM-based draggable magnifier - _May 2004_
   * [Demo](http://persistent.info/web-experiments/magnifier/)
   * [Source](https://github.com/mihaip/web-experiments/tree/master/magnifier)

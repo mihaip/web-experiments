@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>data: URL-based Animation</title>
+  <style type="text/css">
+    #circleImage {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -32px;
+      margin-top: -32px;
+    }
+  </style>
+  <script type="text/javascript">
+    var HEADER = "data:image/gif,GIF89a%40%00%40%00%F7%00%00";
+    var FOOTER = 
+      "%2C%00%00%00%00%40%00%40%00%00%08%FF%00%FF%09%1CH%B0%A0%C1%83%FF%00(%5" +
+      "C%88%B0%A1%C3%87%10%0D.%9C%C80%A2%C5%8B%0E)j%04%80%B1%A3%C7%8D%1B%3D%8" +
+      "A%8C%08R%E3%C8%93%08K%86D%C9R%A0J%93-%1F~%03%F7%AD%E67%89%2F'%C6lh%B3%" +
+      "A7M%829u%16%2CA%B4%E8I%9F%3Ei%0E%0CZQ%60%D1%A7F%3B%22%A5%89%D4%25S%8EN" +
+      "%A1%3E5QB*%D2%AFK%83%0E%E4%AAU%EB%C5%99_%D1%F6%B4%9As%A0V%13%5C%C9%12%" +
+      "3D%9BvjX%95n%E5%96%7Dj%B1.%D8%BB%2B%B3%96%D0%BB%B7%AF_%9BJ%0B%C2%248%F" +
+      "8mY%C3T%7BF%A6%EA%F1-%E1%A8%10%0F%FB%AC%BC%F71%E4%9A%917s%26J%16.%E9%D" +
+      "3t%BF%86%1E%09%F5%F2%5C%8C%9AO%9A.z%D9%84%C7%A4kQv%26%7D%14t%CD%9D%BBw" +
+      "%0AwK%BB%2B%C6_%C8%91%FB%1A%3E%DC%97%AF%E4%CA%913%7F(%A4%BA%F5%83%CE%A" +
+      "3g%7F%FEk%FA%C1!%D6%C3W%FF'%C8%DDyy%E8%CB%BD%0F%14_%1D%FCu%81%BF%9Es%8" +
+      "7%0E%5D%BD%40%F6%F8%85%FC%A3O%DF%7C%FC%F4%DE%E1%E7%9E%7B%FA%F1%17%DD%7" +
+      "F%CA%A9%97%9F%80%E8%C9w%9Ey%0A%867%04x%04%86%F7%A0v%E6%3D%17!%7B%15Z%E" +
+      "7%60%7C%CA%CD%97%DC%86%ED%95%C8%1E%82%20%1E%98!%89%0B%5E%17%22%8A%C99g" +
+      "_%8B%EC%ED%E7%E0v%DA%D9%F7%0F%8D%EF%EDg%20%82%3A%EE(%04%81%1D%8E7%D0%7" +
+      "F%FE%25%18%A4%90%D6%15y%10%8CK%12%94%1Fx%17yb%E5'X%06Y%A3E%9E%7Cb%E5%9" +
+      "7%5Ez%12%25FX%96%D9%A5%97a%C6%04%C6%9A%60%84%01%C6HXv)'%98i%9E%D4%26%9" +
+      "Bx%BE%D9%D1%95f%96%E9%A7%9Dy%E2%E9%26F_%9E%C9%A7%A1Yz%C4%A6%9B%81%B2Y%" +
+      "25%9Fh%CE9%A7H%8D6%FA%E8%99a%C6%89f%A2%18-*%A8%A5%11%F5%99%A9%9C%9A%16" +
+      "%F4%C7%A9%A8%1E%F4%E9%9A%8C%E6iQ%A4%9A%CE%8F%99%E9%40%A8%D6%9A*A%81%B6" +
+      "%FA)%97%A3%C6%89%A9%9C%02%D9*%EC%1F%B8%DE%D9h%18n%0E%CA%25%A4%BE%F2%19" +
+      "%EC%B0%C2%0E%C4h%B2%9E%BA%BA%2C%98%87%02%FB%0F%B4~%D8%3A%10%AB%BAVJh%9" +
+      "8%92~%F9%2C%B4%A8vK%AC%40%95V%EB%11%A6%BEr%8A%EE%B0%DF%E6%89%AC%B1k%8E" +
+      "D%AA%95%A6%CE%EBm%BD%E1%B2%AA%E7t%FE%FE%FBm%C0%F9%AA%C7-%BD%06%09%9C%B" +
+      "0%7D%05%D7%3A%E6C%11%AF%3BqC%15_L%B1%BF%1AC4o%C7%16E%CB%5C%40%00%3B";
+    var HEX_DIGITS = {0: 0, 1: 1, 2:2, 3:3, 4:4, 5:5, 6:6, 7:7, 8:8, 9:9,
+                      10:'A', 11:'B', 12:'C', 13:'D', 14:'E', 15:'F'};
+    
+    function getPalette(startingPosition) {
+      var colors = [];
+      for (var i=startingPosition; i < startingPosition + 255; i++) {
+        var value = i % 256;
+        
+        var digit1 = HEX_DIGITS[parseInt(value/16)];
+        var digit2 = HEX_DIGITS[value % 16];
+        
+        var colorValue = "%" + digit1 + digit2;
+        
+        colors.push(colorValue);
+        colors.push(colorValue);
+        colors.push(colorValue);
+      }
+      
+      // always want white for the last position, for the background
+      colors.push("%FF%FF%FF");
+      
+      return colors.join("");
+    }
+
+    function updateImage(startingPosition) {
+      var circleImage = document.getElementById("circleImage");
+      
+      circleImage.src = HEADER + getPalette(startingPosition) + FOOTER;    
+      window.setTimeout(function() {updateImage(startingPosition + 12);}, 20);
+    }
+    
+    function initialize() {
+      updateImage(0);
+    }
+  </script>
+</head>
+<body onload="initialize()">
+
+<img src="" id="circleImage" width="64" height="64" alt="Animating circles">
+
+</body>
+</html>
