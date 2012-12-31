@@ -15,6 +15,11 @@ Various prototypes, experiments and proofs of concept that have appeared on [per
   * [Screencast](http://www.youtube.com/watch?v=rVtPBsy03wU)
   * [Source](https://github.com/mihaip/web-experiments/tree/master/distortion)
   * [Blog post](http://blog.persistent.info/2010/11/distortion-grid-using-css-3d-transforms.html)
+* Chrome skipped animation frames performance puzzler - _November 2010_
+  * [Demo](http://persistent.info/web-experiments/skipped-frames-puzzler/)
+  * [Screencast](http://www.youtube.com/watch?v=9vy44EEaHwY)
+  * [Source](https://github.com/mihaip/web-experiments/tree/master/skipped-frames-puzzler)
+  * [Blog post](http://blog.persistent.info/2010/11/chrome-performance-puzzler.html)
 * Rendering text in `<canvas>` via font textures - _Feburary 2006_
   * [Demo](http://persistent.info/web-experiments/canvas-text/)
   * [Source](https://github.com/mihaip/web-experiments/tree/master/canvas-text)

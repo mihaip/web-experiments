@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Performance Puzzler: Jerky Animation</title>
+  <link rel="SHORTCUT ICON" href="data:text/html,no favicon please"/>
+  <style>
+    @-webkit-keyframes slide {
+      from {
+        -webkit-transform: translateX(-200px);
+      }
+      
+      to {
+        -webkit-transform: translateX(200px);
+      }
+    }
+    
+    
+    #ball {
+      background: #aaa;
+      width: 60px;
+      height: 60px;
+      -webkit-border-radius: 30px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -30px;
+      margin-left: -30px;
+      -webkit-animation-name: slide;
+      -webkit-animation-duration: 1s;
+      -webkit-animation-iteration-count: infinite;
+      -webkit-animation-direction: alternate;
+      -webkit-animation-timing-function: linear;
+    }
+    
+    #divider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: #eee;
+      left: 50%;
+    }    
+  </style>
+  
+  <script>
+    function init() {
+      var duration =
+          document.location.search
+              ? document.location.search.substring(1) :
+              '1';
+      var ballNode = document.getElementById('ball');
+      ballNode.style.webkitAnimationDuration = duration + 's';
+      
+      var position = 'left';
+      ballNode.addEventListener(
+          'webkitAnimationIteration',
+          function() {
+              position = position == 'left' ? 'right' : 'left';
+              window.location.hash = '#' + position;
+          });
+    }
+  </script>
+</head>
+<body onload="init()">
+
+<div id="divider"></div>
+
+
+
+<div id="ball"></div>
+
+
+
+</body>
+</html>
