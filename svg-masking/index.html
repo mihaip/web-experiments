@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Image-based SVG Masking</title>
+  <style>
+    body {
+      background: #eee;
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 12px;
+    }
+
+    .container {
+      width: 1024px;
+      height: 609px;
+      margin: 0 auto;
+      border: solid 8px white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      background: #9cf;
+    }
+
+    .masked {
+      width: 1024px;
+      height: 609px;
+
+      -webkit-mask-image: url("world-mask.png");
+      -webkit-mask-size: cover;
+
+      mask: url("#world-mask");
+    }
+
+    .masked.linen {
+      background-image: url("linen.jpg");
+    }
+    .masked.metal {
+      background-image: url("metal.jpg");
+    }
+    .masked.leather {
+      background-image: url("leather.jpg");
+    }
+
+    .controls {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 5px;
+      left: 5px;
+      margin
+      color: #999;
+      font-size: 10px;
+    }
+
+    .footer a {
+      color: #00c;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="masked linen"></div>
+</div>
+
+<div class="controls">
+  <label>
+  World:
+    <select onchange="updateTexture(this)">
+      <option value="linen">Linen</option>
+      <option value="metal">Brushed Metal</option>
+      <option value="leather">Leather</option>
+    </select>
+  </label>
+</div>
+
+<script>
+var maskedNode = document.querySelector(".masked");
+function updateTexture(selectNode) {
+  for (var i = 0; i < selectNode.options.length; i++) {
+    var className = selectNode.options[i].value;
+    if (i == selectNode.selectedIndex) {
+      maskedNode.classList.add(className);
+    } else {
+      maskedNode.classList.remove(className);
+    }
+  }
+}
+</script>
+
+<div class="footer">
+  World map from <a href="http://www.vectorworldmap.com/">Vector World Map</a>,
+  linen texture from <a href="http://www.premiumpixels.com/freebies/apple-ios-linen-texture/">Premium Pixels</a>,
+  brushed metal texture from <a href="http://www.flickr.com/photos/zooboing/3662888243/">ZooBoing</a>,
+  leather texture from <a href="http://www.fuzzimo.com/free-hi-res-leather-textures-seamless/">fuzzimo</a>.
+</div>
+
+<svg height="0">
+  <filter id="maskfilter">
+    <feColorMatrix in="SourceAlpha"
+                   type="matrix"
+                   values="0 0 0 1 0
+                           0 0 0 1 0
+                           0 0 0 1 0
+                           0 0 0 1 0" />
+  </filter>
+
+  <mask id="world-mask">
+    <image width="1024px" height="609px" xlink:href="world-mask.png" filter="url(#maskfilter)" />
+  </mask>
+</svg>
+
+</body>
+</html>
