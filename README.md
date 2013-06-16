@@ -5,7 +5,7 @@ Various prototypes, experiments and proofs of concept that have appeared on [per
 * Image-based SVG masking - _June 2013_
   * [Demo](http://persistent.info/web-experiments/svg-masking/)
   * [Source](https://github.com/mihaip/web-experiments/tree/master/svg-masking)
-  * [Blog post](http://blog.persistent.info/TODO)
+  * [Blog post](http://blog.persistent.info/2013/06/image-based-svg-masking.html)
 * Screenshot-proof images via temporal dithering - _December 2012_
   * [Demo](http://persistent.info/web-experiments/temporal-dithering/)
   * [Source](https://github.com/mihaip/web-experiments/tree/master/temporal-dithering)
