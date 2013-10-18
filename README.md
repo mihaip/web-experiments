@@ -4,7 +4,7 @@ Various prototypes, experiments and proofs of concept that have appeared on [per
 
 * `UIWebView` Communication Mechanisms - _October 2013_
   * [Source](https://github.com/mihaip/web-experiments/tree/master/uiwebview-communication)
-  * [Blog post](http://blog.persistent.info/2013/10/a-faster-uiwebview-communication-mechanism.html)
+  * [Blog post](http://blog.persistent.info/2013/10/a-faster-uiwebview-communication.html)
 * Image-based SVG masking - _June 2013_
   * [Demo](http://persistent.info/web-experiments/svg-masking/)
   * [Source](https://github.com/mihaip/web-experiments/tree/master/svg-masking)
