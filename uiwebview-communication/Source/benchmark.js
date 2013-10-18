@@ -4,7 +4,9 @@ var Mechanism = {
     FrameLocationHref: 2,
     FrameSrc: 3,
     FrameLinkClick: 4,
-    CookieChange: 5
+    CookieChange: 5,
+    XhrSync: 6,
+    XhrAsync: 7
 };
 
 // The link does not need to be appended to the document, that avoids triggering
@@ -20,6 +22,7 @@ var frameLinkNode = linkClickFrame.contentWindow.document.createElement("a");
 
 var pingCount = 0;
 var pongUrl;
+var xhr = new XMLHttpRequest();
 function ping(mechanism, startTime) {
     pingCount++;
     pongUrl = "pong://" + startTime;
@@ -43,6 +46,11 @@ function ping(mechanism, startTime) {
             break;
         case Mechanism.CookieChange:
             document.cookie = "pong=" + startTime;
+            break;
+        case Mechanism.XhrSync:
+        case Mechanism.XhrAsync:
+            xhr.open("GET", pongUrl, mechanism == Mechanism.XhrAsync);
+            xhr.send();
             break;
     }
 }

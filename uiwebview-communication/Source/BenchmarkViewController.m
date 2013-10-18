@@ -9,17 +9,25 @@ enum Mechanism {
     FrameSrc,
     FrameLinkClick,
     CookieChange,
+    XhrSync,
+    XhrAsync,
     kNumMechanisms
 };
 
 const NSUInteger kNumIterationsPerMechanisms = 1000;
 const NSUInteger kNumIterations = kNumIterationsPerMechanisms * kNumMechanisms;
 
+BenchmarkViewController* gController;
+
 typedef struct {
     uint64_t min;
     uint64_t max;
     uint64_t sum;
 } MechanismTiming;
+
+@interface PongUrlProtocol : NSURLProtocol
+
+@end
 
 @implementation BenchmarkViewController {
     UIWebView *_webView;
@@ -44,7 +52,6 @@ typedef struct {
     [self.view addSubview:_benchmarkButton];
 
     _webView = [[UIWebView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_benchmarkButton.frame) + 10, width - 30, 56)];
-    _webView.delegate = self;
     [self.view addSubview:_webView];
 
     _results = [[UITextView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_webView.frame) + 10, width - 30, self.view.bounds.size.height - CGRectGetMaxY(_webView.frame) - 10) textContainer:nil];
@@ -71,6 +78,14 @@ typedef struct {
                                                     uint64_t end = mach_absolute_time();
                                                     [self endIteration:end - start];
     }];
+
+
+    // UIWebViewDelegate's shouldStartLoadWithRequest gets called for navigations and iframe loads...
+    _webView.delegate = self;
+
+    // ...but we also need a NSURLProtocol subclass to catch XMLHttpRequests
+    gController = self;
+    [NSURLProtocol registerClass:PongUrlProtocol.class];
 }
 
 -(void)viewDidLoad {
@@ -135,6 +150,8 @@ typedef struct {
             case FrameSrc:          name = @"frame src       "; break;
             case FrameLinkClick:    name = @"frame <a> click "; break;
             case CookieChange:      name = @"document.cookie "; break;
+            case XhrSync:           name = @"XHR sync        "; break;
+            case XhrAsync:          name = @"XHR async       "; break;
         }
         MechanismTiming *timing = &_mechanismTimings[i];
         double averageMs = [self machTimeToMs:timing->sum]/(double)kNumIterationsPerMechanisms;
@@ -153,12 +170,37 @@ typedef struct {
 
 -(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     if ([request.URL.scheme isEqualToString:@"pong"]) {
-        uint64_t start = request.URL.host.longLongValue;
-        uint64_t end = mach_absolute_time();
-        [self endIteration:end - start];
+        [self handlePongRequest:request];
         return NO;
     }
     return YES;
+}
+
+-(void)handlePongRequest:(NSURLRequest *)request {
+    uint64_t start = request.URL.host.longLongValue;
+    uint64_t end = mach_absolute_time();
+    [self endIteration:end - start];
+}
+
+@end
+
+
+@implementation PongUrlProtocol
+
++(BOOL)canInitWithRequest:(NSURLRequest *)request {
+    return [request.URL.scheme isEqualToString:@"pong"];
+}
+
++(NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
+    return request;
+}
+
+-(void)startLoading {
+    [gController performSelectorOnMainThread:@selector(handlePongRequest:) withObject:self.request waitUntilDone:NO];
+    [self.client URLProtocol:self didFailWithError:[NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorZeroByteResource userInfo:nil]];
+}
+
+-(void)stopLoading {
 }
 
 @end
