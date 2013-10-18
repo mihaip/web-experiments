@@ -5,12 +5,10 @@
 enum Mechanism {
     LocationHref = 0,
     LinkClick,
-    FrameLocationHref,
     FrameSrc,
-    FrameLinkClick,
-    CookieChange,
     XhrSync,
     XhrAsync,
+    CookieChange,
     kNumMechanisms
 };
 
@@ -146,12 +144,10 @@ typedef struct {
         switch (i) {
             case LocationHref:      name = @"location.href   "; break;
             case LinkClick:         name = @"<a> click       "; break;
-            case FrameLocationHref: name = @"frame location  "; break;
-            case FrameSrc:          name = @"frame src       "; break;
-            case FrameLinkClick:    name = @"frame <a> click "; break;
-            case CookieChange:      name = @"document.cookie "; break;
+            case FrameSrc:          name = @"frame.src       "; break;
             case XhrSync:           name = @"XHR sync        "; break;
             case XhrAsync:          name = @"XHR async       "; break;
+            case CookieChange:      name = @"document.cookie "; break;
         }
         MechanismTiming *timing = &_mechanismTimings[i];
         double averageMs = [self machTimeToMs:timing->sum]/(double)kNumIterationsPerMechanisms;
