@@ -4,6 +4,7 @@
 
 enum Mechanism {
     LocationHref = 0,
+    LocationHash,
     LinkClick,
     FrameSrc,
     XhrSync,
@@ -143,6 +144,7 @@ typedef struct {
         NSString *name = @"";
         switch (i) {
             case LocationHref:      name = @"location.href   "; break;
+            case LocationHash:      name = @"location.hash   "; break;
             case LinkClick:         name = @"<a> click       "; break;
             case FrameSrc:          name = @"frame.src       "; break;
             case XhrSync:           name = @"XHR sync        "; break;
@@ -166,14 +168,16 @@ typedef struct {
 
 -(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     if ([request.URL.scheme isEqualToString:@"pong"]) {
-        [self handlePongRequest:request];
+        [self handlePongRequest:request.URL.host];
         return NO;
+    } else if ([request.URL.fragment hasPrefix:@"pong://"]) {
+        [self handlePongRequest:[request.URL.fragment substringFromIndex:7]];
     }
     return YES;
 }
 
--(void)handlePongRequest:(NSURLRequest *)request {
-    uint64_t start = request.URL.host.longLongValue;
+-(void)handlePongRequest:(NSString *)data {
+    uint64_t start = data.longLongValue;
     uint64_t end = mach_absolute_time();
     [self endIteration:end - start];
 }
@@ -192,7 +196,7 @@ typedef struct {
 }
 
 -(void)startLoading {
-    [gController performSelectorOnMainThread:@selector(handlePongRequest:) withObject:self.request waitUntilDone:NO];
+    [gController performSelectorOnMainThread:@selector(handlePongRequest:) withObject:self.request.URL.host waitUntilDone:NO];
     [self.client URLProtocol:self didFailWithError:[NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorZeroByteResource userInfo:nil]];
 }
 

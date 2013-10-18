@@ -1,10 +1,11 @@
 var Mechanism = {
     LocationHref: 0,
-    LinkClick: 1,
-    FrameSrc: 2,
-    XhrSync: 3,
-    XhrAsync: 4,
-    CookieChange: 5
+    LocationHash: 1,
+    LinkClick: 2,
+    FrameSrc: 3,
+    XhrSync: 4,
+    XhrAsync: 5,
+    CookieChange: 6
 };
 
 // The link does not need to be appended to the document, that avoids triggering
@@ -21,6 +22,9 @@ function ping(mechanism, startTime) {
     switch (mechanism) {
         case Mechanism.LocationHref:
             location.href = pongUrl;
+            break;
+        case Mechanism.LocationHash:
+            location.hash = "#" + pongUrl;
             break;
         case Mechanism.LinkClick:
             linkNode.href = pongUrl;
