@@ -16,6 +16,7 @@
 		91D3E181180BC37E001FA549 /* benchmark.css in Resources */ = {isa = PBXBuildFile; fileRef = 91D3E17E180BC37E001FA549 /* benchmark.css */; };
 		91D3E182180BC37E001FA549 /* benchmark.html in Resources */ = {isa = PBXBuildFile; fileRef = 91D3E17F180BC37E001FA549 /* benchmark.html */; };
 		91D3E183180BC37E001FA549 /* benchmark.js in Resources */ = {isa = PBXBuildFile; fileRef = 91D3E180180BC37E001FA549 /* benchmark.js */; };
+		DC73525F187B4B3200ABF917 /* UIWebView+TS_JavaScriptContext.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73525E187B4B3200ABF917 /* UIWebView+TS_JavaScriptContext.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,8 @@
 		91D3E17E180BC37E001FA549 /* benchmark.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = benchmark.css; sourceTree = "<group>"; };
 		91D3E17F180BC37E001FA549 /* benchmark.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = benchmark.html; sourceTree = "<group>"; };
 		91D3E180180BC37E001FA549 /* benchmark.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = benchmark.js; sourceTree = "<group>"; };
+		DC73525D187B4B3200ABF917 /* UIWebView+TS_JavaScriptContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+TS_JavaScriptContext.h"; sourceTree = "<group>"; };
+		DC73525E187B4B3200ABF917 /* UIWebView+TS_JavaScriptContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+TS_JavaScriptContext.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +88,8 @@
 				911F222C1809D2EB00328F9A /* AppDelegate.m */,
 				91D3E17B180BC36E001FA549 /* BenchmarkViewController.h */,
 				91D3E17C180BC36E001FA549 /* BenchmarkViewController.m */,
+				DC73525D187B4B3200ABF917 /* UIWebView+TS_JavaScriptContext.h */,
+				DC73525E187B4B3200ABF917 /* UIWebView+TS_JavaScriptContext.m */,
 				91D3E17E180BC37E001FA549 /* benchmark.css */,
 				91D3E17F180BC37E001FA549 /* benchmark.html */,
 				91D3E180180BC37E001FA549 /* benchmark.js */,
@@ -169,6 +174,7 @@
 			files = (
 				911F222D1809D2EB00328F9A /* AppDelegate.m in Sources */,
 				911F22291809D2EB00328F9A /* main.m in Sources */,
+				DC73525F187B4B3200ABF917 /* UIWebView+TS_JavaScriptContext.m in Sources */,
 				91D3E17D180BC36E001FA549 /* BenchmarkViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,4 +1,5 @@
 #import "BenchmarkViewController.h"
+#import "UIWebView+TS_JavaScriptContext.h"
 
 #import <mach/mach_time.h>
 
@@ -10,6 +11,7 @@ enum Mechanism {
     XhrSync,
     XhrAsync,
     CookieChange,
+    JavaScriptCore,
     kNumMechanisms
 };
 
@@ -24,7 +26,15 @@ typedef struct {
     uint64_t sum;
 } MechanismTiming;
 
+@protocol WebViewExport <JSExport>
+- (void)pong:(JSValue *)value;
+@end
+
 @interface PongUrlProtocol : NSURLProtocol
+
+@end
+
+@interface BenchmarkViewController () <TSWebViewDelegate, WebViewExport>
 
 @end
 
@@ -34,14 +44,15 @@ typedef struct {
     NSUInteger _iterationCounter;
     UITextView *_results;
     MechanismTiming _mechanismTimings[kNumMechanisms];
+    JSContext *_context;
 }
 
 -(void)loadView {
     [super loadView];
     self.view = [[UIView alloc] initWithFrame:UIScreen.mainScreen.bounds];
-
+    
     CGFloat width = self.view.bounds.size.width;
-
+    
     _benchmarkButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [_benchmarkButton setTitle:@"Benchmark" forState:UIControlStateNormal];
     [_benchmarkButton setTitle:@"Running…" forState:UIControlStateDisabled];
@@ -49,15 +60,15 @@ typedef struct {
     _benchmarkButton.center = CGPointMake(width/2, 50);
     [_benchmarkButton addTarget:self action:@selector(runBenchmark:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_benchmarkButton];
-
+    
     _webView = [[UIWebView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_benchmarkButton.frame) + 10, width - 30, 56)];
     [self.view addSubview:_webView];
-
+    
     _results = [[UITextView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_webView.frame) + 10, width - 30, self.view.bounds.size.height - CGRectGetMaxY(_webView.frame) - 10) textContainer:nil];
     _results.font = [UIFont fontWithName:@"Courier" size:12];
     _results.editable = NO;
     [self.view addSubview:_results];
-
+    
     [NSNotificationCenter.defaultCenter addObserverForName:NSHTTPCookieManagerCookiesChangedNotification
                                                     object:nil
                                                      queue:nil
@@ -76,12 +87,12 @@ typedef struct {
                                                     uint64_t start = pongCookie.value.longLongValue;
                                                     uint64_t end = mach_absolute_time();
                                                     [self endIteration:end - start];
-    }];
-
-
+                                                }];
+    
+    
     // UIWebViewDelegate's shouldStartLoadWithRequest gets called for navigations and iframe loads...
     _webView.delegate = self;
-
+    
     // ...but we also need a NSURLProtocol subclass to catch XMLHttpRequests
     gController = self;
     [NSURLProtocol registerClass:PongUrlProtocol.class];
@@ -89,7 +100,7 @@ typedef struct {
 
 -(void)viewDidLoad {
     [super viewDidLoad];
-
+    
     NSString *benchmarkPath = [NSBundle.mainBundle pathForResource:@"benchmark" ofType:@"html"];
     NSURL *benchmarkUrl = [NSURL fileURLWithPath:benchmarkPath];
     [_webView loadRequest:[NSURLRequest requestWithURL:benchmarkUrl]];
@@ -109,7 +120,11 @@ typedef struct {
 -(void)startIteration {
     int mechanism = _iterationCounter % kNumMechanisms;
     uint64_t start = mach_absolute_time();
-    [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"ping(%d, '%qu')", mechanism, start]];
+    if (mechanism == JavaScriptCore) {
+        [_context[@"ping"] callWithArguments:@[@(mechanism), @(start)]];
+    } else {
+        [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"ping(%d, '%qu')", mechanism, start]];
+    }
 }
 
 -(void)endIteration:(uint64_t)delta {
@@ -150,12 +165,13 @@ typedef struct {
             case XhrSync:           name = @"XHR sync        "; break;
             case XhrAsync:          name = @"XHR async       "; break;
             case CookieChange:      name = @"document.cookie "; break;
+            case JavaScriptCore:    name = @"JavaScriptCore  ";  break;
         }
         MechanismTiming *timing = &_mechanismTimings[i];
         double averageMs = [self machTimeToMs:timing->sum]/(double)kNumIterationsPerMechanisms;
         double minMs = [self machTimeToMs:timing->min];
         double maxMs = [self machTimeToMs:timing->max];
-        [results appendString:[NSString stringWithFormat:@"%@  %4.3f  %4.3f  %4.3f\n", name, averageMs, minMs, maxMs]];
+        [results appendString:[NSString stringWithFormat:@"%@   %4.3f  %4.3f  %4.3f\n", name, averageMs, minMs, maxMs]];
     }
     _results.text = results;
 }
@@ -176,8 +192,19 @@ typedef struct {
     return YES;
 }
 
+- (void)webView:(UIWebView *)webView didCreateJavaScriptContext:(JSContext *)ctx {
+    _context = ctx;
+    ctx[@"viewController"] = self;
+}
+
 -(void)handlePongRequest:(NSString *)data {
     uint64_t start = data.longLongValue;
+    uint64_t end = mach_absolute_time();
+    [self endIteration:end - start];
+}
+
+-(void)pong:(JSValue *)value {
+    uint64_t start = [value toNumber].longLongValue;
     uint64_t end = mach_absolute_time();
     [self endIteration:end - start];
 }

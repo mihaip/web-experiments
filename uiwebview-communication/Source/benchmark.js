@@ -5,7 +5,8 @@ var Mechanism = {
     FrameSrc: 3,
     XhrSync: 4,
     XhrAsync: 5,
-    CookieChange: 6
+    CookieChange: 6,
+    JavaScriptCore: 7
 };
 
 // The link does not need to be appended to the document, that avoids triggering
@@ -44,6 +45,9 @@ function ping(mechanism, startTime) {
         case Mechanism.XhrAsync:
             xhr.open("GET", pongUrl, mechanism == Mechanism.XhrAsync);
             xhr.send();
+            break;
+        case Mechanism.JavaScriptCore:
+            viewController.pong(startTime);
             break;
     }
 }
