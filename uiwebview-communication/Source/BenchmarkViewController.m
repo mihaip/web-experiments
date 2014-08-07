@@ -133,9 +133,21 @@ typedef struct {
     [_uiWebView loadRequest:[NSURLRequest requestWithURL:benchmarkUrl]];
 
     if (_wkWebView) {
-        NSString *benchmarkPath = [NSBundle.mainBundle pathForResource:@"benchmark-wkwebview" ofType:@"html"];
-        NSURL *benchmarkUrl = [NSURL fileURLWithPath:benchmarkPath];
-        [_wkWebView loadRequest:[NSURLRequest requestWithURL:benchmarkUrl]];
+        // Serve HTML inline until https://devforums.apple.com/message/1009455 is fixed.
+        NSString *htmlPath = [NSBundle.mainBundle pathForResource:@"benchmark-wkwebview" ofType:@"html"];
+        NSString *jsPath = [NSBundle.mainBundle pathForResource:@"benchmark-wkwebview" ofType:@"js"];
+        NSString *cssPath = [NSBundle.mainBundle pathForResource:@"benchmark" ofType:@"css"];
+
+        NSString *benchmarkHtml = [NSString stringWithContentsOfFile:htmlPath encoding:NSUTF8StringEncoding error:nil];
+        NSString *benchmarkJs = [NSString stringWithContentsOfFile:jsPath encoding:NSUTF8StringEncoding error:nil];
+        NSString *benchmarkCss = [NSString stringWithContentsOfFile:cssPath encoding:NSUTF8StringEncoding error:nil];
+
+        NSString *benchmarkScriptTag = [NSString stringWithFormat:@"<script>%@</script>", benchmarkJs];
+        NSString *benchmarkStyleTag = [NSString stringWithFormat:@"<style>%@</style>", benchmarkCss];
+        benchmarkHtml = [benchmarkHtml stringByReplacingOccurrencesOfString:@"<script src=\"benchmark-wkwebview.js\"></script>" withString:benchmarkScriptTag];
+        benchmarkHtml = [benchmarkHtml stringByReplacingOccurrencesOfString:@"<link rel=\"stylesheet\" href=\"benchmark.css\">" withString:benchmarkStyleTag];
+
+        [_wkWebView loadHTMLString:benchmarkHtml baseURL:nil];
     }
 }
 
