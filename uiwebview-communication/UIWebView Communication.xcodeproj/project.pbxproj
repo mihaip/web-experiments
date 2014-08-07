@@ -14,8 +14,8 @@
 		911F222D1809D2EB00328F9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 911F222C1809D2EB00328F9A /* AppDelegate.m */; };
 		91D3E17D180BC36E001FA549 /* BenchmarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D3E17C180BC36E001FA549 /* BenchmarkViewController.m */; };
 		91D3E181180BC37E001FA549 /* benchmark.css in Resources */ = {isa = PBXBuildFile; fileRef = 91D3E17E180BC37E001FA549 /* benchmark.css */; };
-		91D3E182180BC37E001FA549 /* benchmark.html in Resources */ = {isa = PBXBuildFile; fileRef = 91D3E17F180BC37E001FA549 /* benchmark.html */; };
-		91D3E183180BC37E001FA549 /* benchmark.js in Resources */ = {isa = PBXBuildFile; fileRef = 91D3E180180BC37E001FA549 /* benchmark.js */; };
+		91D3E182180BC37E001FA549 /* benchmark-uiwebview.html in Resources */ = {isa = PBXBuildFile; fileRef = 91D3E17F180BC37E001FA549 /* benchmark-uiwebview.html */; };
+		91D3E183180BC37E001FA549 /* benchmark-uiwebview.js in Resources */ = {isa = PBXBuildFile; fileRef = 91D3E180180BC37E001FA549 /* benchmark-uiwebview.js */; };
 		DC73525F187B4B3200ABF917 /* UIWebView+TS_JavaScriptContext.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73525E187B4B3200ABF917 /* UIWebView+TS_JavaScriptContext.m */; };
 /* End PBXBuildFile section */
 
@@ -29,12 +29,11 @@
 		911F222A1809D2EB00328F9A /* UIWebView Communication-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIWebView Communication-Prefix.pch"; sourceTree = "<group>"; };
 		911F222B1809D2EB00328F9A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		911F222C1809D2EB00328F9A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		911F22351809D2EB00328F9A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		91D3E17B180BC36E001FA549 /* BenchmarkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BenchmarkViewController.h; sourceTree = "<group>"; };
 		91D3E17C180BC36E001FA549 /* BenchmarkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BenchmarkViewController.m; sourceTree = "<group>"; };
 		91D3E17E180BC37E001FA549 /* benchmark.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = benchmark.css; sourceTree = "<group>"; };
-		91D3E17F180BC37E001FA549 /* benchmark.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = benchmark.html; sourceTree = "<group>"; };
-		91D3E180180BC37E001FA549 /* benchmark.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = benchmark.js; sourceTree = "<group>"; };
+		91D3E17F180BC37E001FA549 /* benchmark-uiwebview.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "benchmark-uiwebview.html"; sourceTree = "<group>"; };
+		91D3E180180BC37E001FA549 /* benchmark-uiwebview.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "benchmark-uiwebview.js"; sourceTree = "<group>"; };
 		DC73525D187B4B3200ABF917 /* UIWebView+TS_JavaScriptContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+TS_JavaScriptContext.h"; sourceTree = "<group>"; };
 		DC73525E187B4B3200ABF917 /* UIWebView+TS_JavaScriptContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+TS_JavaScriptContext.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -76,7 +75,6 @@
 				911F221C1809D2EB00328F9A /* Foundation.framework */,
 				911F221E1809D2EB00328F9A /* CoreGraphics.framework */,
 				911F22201809D2EB00328F9A /* UIKit.framework */,
-				911F22351809D2EB00328F9A /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -91,8 +89,8 @@
 				DC73525D187B4B3200ABF917 /* UIWebView+TS_JavaScriptContext.h */,
 				DC73525E187B4B3200ABF917 /* UIWebView+TS_JavaScriptContext.m */,
 				91D3E17E180BC37E001FA549 /* benchmark.css */,
-				91D3E17F180BC37E001FA549 /* benchmark.html */,
-				91D3E180180BC37E001FA549 /* benchmark.js */,
+				91D3E17F180BC37E001FA549 /* benchmark-uiwebview.html */,
+				91D3E180180BC37E001FA549 /* benchmark-uiwebview.js */,
 				911F22231809D2EB00328F9A /* Supporting Files */,
 			);
 			path = Source;
@@ -134,7 +132,7 @@
 		911F22111809D2EB00328F9A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "Mihai Parparita";
 			};
 			buildConfigurationList = 911F22141809D2EB00328F9A /* Build configuration list for PBXProject "UIWebView Communication" */;
@@ -159,8 +157,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91D3E183180BC37E001FA549 /* benchmark.js in Resources */,
-				91D3E182180BC37E001FA549 /* benchmark.html in Resources */,
+				91D3E183180BC37E001FA549 /* benchmark-uiwebview.js in Resources */,
+				91D3E182180BC37E001FA549 /* benchmark-uiwebview.html in Resources */,
 				91D3E181180BC37E001FA549 /* benchmark.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -186,7 +184,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -226,7 +223,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;

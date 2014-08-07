@@ -17,6 +17,7 @@ enum Mechanism {
 
 const NSUInteger kNumIterationsPerMechanisms = 1000;
 const NSUInteger kNumIterations = kNumIterationsPerMechanisms * kNumMechanisms;
+BOOL kOnIOS8;
 
 BenchmarkViewController* gController;
 
@@ -39,7 +40,7 @@ typedef struct {
 @end
 
 @implementation BenchmarkViewController {
-    UIWebView *_webView;
+    UIWebView *_uiWebView;
     UIButton *_benchmarkButton;
     NSUInteger _iterationCounter;
     UITextView *_results;
@@ -47,12 +48,18 @@ typedef struct {
     JSContext *_context;
 }
 
++(void)initialize {
+    if (self == BenchmarkViewController.class) {
+        kOnIOS8 = [UIDevice.currentDevice.systemVersion compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending;
+    }
+}
+
 -(void)loadView {
     [super loadView];
     self.view = [[UIView alloc] initWithFrame:UIScreen.mainScreen.bounds];
-    
+
     CGFloat width = self.view.bounds.size.width;
-    
+
     _benchmarkButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [_benchmarkButton setTitle:@"Benchmark" forState:UIControlStateNormal];
     [_benchmarkButton setTitle:@"Running…" forState:UIControlStateDisabled];
@@ -60,15 +67,15 @@ typedef struct {
     _benchmarkButton.center = CGPointMake(width/2, 50);
     [_benchmarkButton addTarget:self action:@selector(runBenchmark:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_benchmarkButton];
-    
-    _webView = [[UIWebView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_benchmarkButton.frame) + 10, width - 30, 56)];
-    [self.view addSubview:_webView];
-    
-    _results = [[UITextView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_webView.frame) + 10, width - 30, self.view.bounds.size.height - CGRectGetMaxY(_webView.frame) - 10) textContainer:nil];
+
+    _uiWebView = [[UIWebView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_benchmarkButton.frame) + 10, width - 30, 56)];
+    [self.view addSubview:_uiWebView];
+
+    _results = [[UITextView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_uiWebView.frame) + 10, width - 30, self.view.bounds.size.height - CGRectGetMaxY(_uiWebView.frame) - 10) textContainer:nil];
     _results.font = [UIFont fontWithName:@"Courier" size:12];
     _results.editable = NO;
     [self.view addSubview:_results];
-    
+
     [NSNotificationCenter.defaultCenter addObserverForName:NSHTTPCookieManagerCookiesChangedNotification
                                                     object:nil
                                                      queue:nil
@@ -88,11 +95,11 @@ typedef struct {
                                                     uint64_t end = mach_absolute_time();
                                                     [self endIteration:end - start];
                                                 }];
-    
-    
+
+
     // UIWebViewDelegate's shouldStartLoadWithRequest gets called for navigations and iframe loads...
-    _webView.delegate = self;
-    
+    _uiWebView.delegate = self;
+
     // ...but we also need a NSURLProtocol subclass to catch XMLHttpRequests
     gController = self;
     [NSURLProtocol registerClass:PongUrlProtocol.class];
@@ -100,10 +107,10 @@ typedef struct {
 
 -(void)viewDidLoad {
     [super viewDidLoad];
-    
-    NSString *benchmarkPath = [NSBundle.mainBundle pathForResource:@"benchmark" ofType:@"html"];
+
+    NSString *benchmarkPath = [NSBundle.mainBundle pathForResource:@"benchmark-uiwebview" ofType:@"html"];
     NSURL *benchmarkUrl = [NSURL fileURLWithPath:benchmarkPath];
-    [_webView loadRequest:[NSURLRequest requestWithURL:benchmarkUrl]];
+    [_uiWebView loadRequest:[NSURLRequest requestWithURL:benchmarkUrl]];
 }
 
 -(void)runBenchmark:(UIButton *)button {
@@ -122,8 +129,12 @@ typedef struct {
     uint64_t start = mach_absolute_time();
     if (mechanism == JavaScriptCore) {
         [_context[@"ping"] callWithArguments:@[@(mechanism), @(start)]];
+    } else if (mechanism == CookieChange && kOnIOS8) {
+        // Cookie changes don't seem to trigger delegate methods on iOS 8. Since it's a slower mechanism,
+        // it's not work investigating.
+        [self endIteration:0];
     } else {
-        [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"ping(%d, '%qu')", mechanism, start]];
+        [_uiWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"ping(%d, '%qu')", mechanism, start]];
     }
 }
 
