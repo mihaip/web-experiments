@@ -16,6 +16,9 @@
 		91D3E181180BC37E001FA549 /* benchmark.css in Resources */ = {isa = PBXBuildFile; fileRef = 91D3E17E180BC37E001FA549 /* benchmark.css */; };
 		91D3E182180BC37E001FA549 /* benchmark-uiwebview.html in Resources */ = {isa = PBXBuildFile; fileRef = 91D3E17F180BC37E001FA549 /* benchmark-uiwebview.html */; };
 		91D3E183180BC37E001FA549 /* benchmark-uiwebview.js in Resources */ = {isa = PBXBuildFile; fileRef = 91D3E180180BC37E001FA549 /* benchmark-uiwebview.js */; };
+		91E272DA1993467F007056C1 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91E272D91993467F007056C1 /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		91E272DD19934A0D007056C1 /* benchmark-wkwebview.html in Resources */ = {isa = PBXBuildFile; fileRef = 91E272DB19934A0D007056C1 /* benchmark-wkwebview.html */; };
+		91E272DE19934A0D007056C1 /* benchmark-wkwebview.js in Resources */ = {isa = PBXBuildFile; fileRef = 91E272DC19934A0D007056C1 /* benchmark-wkwebview.js */; };
 		DC73525F187B4B3200ABF917 /* UIWebView+TS_JavaScriptContext.m in Sources */ = {isa = PBXBuildFile; fileRef = DC73525E187B4B3200ABF917 /* UIWebView+TS_JavaScriptContext.m */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +37,9 @@
 		91D3E17E180BC37E001FA549 /* benchmark.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = benchmark.css; sourceTree = "<group>"; };
 		91D3E17F180BC37E001FA549 /* benchmark-uiwebview.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "benchmark-uiwebview.html"; sourceTree = "<group>"; };
 		91D3E180180BC37E001FA549 /* benchmark-uiwebview.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "benchmark-uiwebview.js"; sourceTree = "<group>"; };
+		91E272D91993467F007056C1 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		91E272DB19934A0D007056C1 /* benchmark-wkwebview.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "benchmark-wkwebview.html"; sourceTree = "<group>"; };
+		91E272DC19934A0D007056C1 /* benchmark-wkwebview.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "benchmark-wkwebview.js"; sourceTree = "<group>"; };
 		DC73525D187B4B3200ABF917 /* UIWebView+TS_JavaScriptContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+TS_JavaScriptContext.h"; sourceTree = "<group>"; };
 		DC73525E187B4B3200ABF917 /* UIWebView+TS_JavaScriptContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+TS_JavaScriptContext.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -43,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91E272DA1993467F007056C1 /* WebKit.framework in Frameworks */,
 				911F221F1809D2EB00328F9A /* CoreGraphics.framework in Frameworks */,
 				911F22211809D2EB00328F9A /* UIKit.framework in Frameworks */,
 				911F221D1809D2EB00328F9A /* Foundation.framework in Frameworks */,
@@ -72,6 +79,7 @@
 		911F221B1809D2EB00328F9A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				91E272D91993467F007056C1 /* WebKit.framework */,
 				911F221C1809D2EB00328F9A /* Foundation.framework */,
 				911F221E1809D2EB00328F9A /* CoreGraphics.framework */,
 				911F22201809D2EB00328F9A /* UIKit.framework */,
@@ -91,6 +99,8 @@
 				91D3E17E180BC37E001FA549 /* benchmark.css */,
 				91D3E17F180BC37E001FA549 /* benchmark-uiwebview.html */,
 				91D3E180180BC37E001FA549 /* benchmark-uiwebview.js */,
+				91E272DB19934A0D007056C1 /* benchmark-wkwebview.html */,
+				91E272DC19934A0D007056C1 /* benchmark-wkwebview.js */,
 				911F22231809D2EB00328F9A /* Supporting Files */,
 			);
 			path = Source;
@@ -157,8 +167,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91E272DE19934A0D007056C1 /* benchmark-wkwebview.js in Resources */,
 				91D3E183180BC37E001FA549 /* benchmark-uiwebview.js in Resources */,
 				91D3E182180BC37E001FA549 /* benchmark-uiwebview.html in Resources */,
+				91E272DD19934A0D007056C1 /* benchmark-wkwebview.html in Resources */,
 				91D3E181180BC37E001FA549 /* benchmark.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

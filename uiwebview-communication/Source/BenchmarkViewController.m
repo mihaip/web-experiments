@@ -1,5 +1,6 @@
 #import "BenchmarkViewController.h"
 #import "UIWebView+TS_JavaScriptContext.h"
+#import <WebKit/WebKit.h>
 
 #import <mach/mach_time.h>
 
@@ -12,6 +13,7 @@ enum Mechanism {
     XhrAsync,
     CookieChange,
     JavaScriptCore,
+    WKWebViewHandler,
     kNumMechanisms
 };
 
@@ -35,12 +37,13 @@ typedef struct {
 
 @end
 
-@interface BenchmarkViewController () <TSWebViewDelegate, WebViewExport>
+@interface BenchmarkViewController () <TSWebViewDelegate, WebViewExport, WKScriptMessageHandler>
 
 @end
 
 @implementation BenchmarkViewController {
     UIWebView *_uiWebView;
+    WKWebView *_wkWebView;
     UIButton *_benchmarkButton;
     NSUInteger _iterationCounter;
     UITextView *_results;
@@ -70,8 +73,17 @@ typedef struct {
 
     _uiWebView = [[UIWebView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_benchmarkButton.frame) + 10, width - 30, 56)];
     [self.view addSubview:_uiWebView];
+    UIView *bottomWebView = _uiWebView;
 
-    _results = [[UITextView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_uiWebView.frame) + 10, width - 30, self.view.bounds.size.height - CGRectGetMaxY(_uiWebView.frame) - 10) textContainer:nil];
+    if (WKWebView.class) {
+        WKWebViewConfiguration *configuration = [WKWebViewConfiguration new];
+        [configuration.userContentController addScriptMessageHandler:self name:@"pong"];
+        _wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_uiWebView.frame) + 10, width - 30, 56) configuration:configuration];
+        [self.view addSubview:_wkWebView];
+        bottomWebView = _wkWebView;
+    }
+
+    _results = [[UITextView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(bottomWebView.frame) + 10, width - 30, self.view.bounds.size.height - CGRectGetMaxY(bottomWebView.frame) - 10) textContainer:nil];
     _results.font = [UIFont fontWithName:@"Courier" size:12];
     _results.editable = NO;
     [self.view addSubview:_results];
@@ -111,6 +123,12 @@ typedef struct {
     NSString *benchmarkPath = [NSBundle.mainBundle pathForResource:@"benchmark-uiwebview" ofType:@"html"];
     NSURL *benchmarkUrl = [NSURL fileURLWithPath:benchmarkPath];
     [_uiWebView loadRequest:[NSURLRequest requestWithURL:benchmarkUrl]];
+
+    if (_wkWebView) {
+        NSString *benchmarkPath = [NSBundle.mainBundle pathForResource:@"benchmark-wkwebview" ofType:@"html"];
+        NSURL *benchmarkUrl = [NSURL fileURLWithPath:benchmarkPath];
+        [_wkWebView loadRequest:[NSURLRequest requestWithURL:benchmarkUrl]];
+    }
 }
 
 -(void)runBenchmark:(UIButton *)button {
@@ -133,6 +151,12 @@ typedef struct {
         // Cookie changes don't seem to trigger delegate methods on iOS 8. Since it's a slower mechanism,
         // it's not work investigating.
         [self endIteration:0];
+    } else if (mechanism == WKWebViewHandler) {
+        if (_wkWebView) {
+            [_wkWebView evaluateJavaScript:[NSString stringWithFormat:@"ping(%d, '%qu')", mechanism, start] completionHandler:nil];
+        } else {
+            [self endIteration:0];
+        }
     } else {
         [_uiWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"ping(%d, '%qu')", mechanism, start]];
     }
@@ -176,7 +200,8 @@ typedef struct {
             case XhrSync:           name = @"XHR sync        "; break;
             case XhrAsync:          name = @"XHR async       "; break;
             case CookieChange:      name = @"document.cookie "; break;
-            case JavaScriptCore:    name = @"JavaScriptCore  ";  break;
+            case JavaScriptCore:    name = @"JavaScriptCore  "; break;
+            case WKWebViewHandler:  name = @"WKWebViewHandler"; break;
         }
         MechanismTiming *timing = &_mechanismTimings[i];
         double averageMs = [self machTimeToMs:timing->sum]/(double)kNumIterationsPerMechanisms;
@@ -203,9 +228,15 @@ typedef struct {
     return YES;
 }
 
-- (void)webView:(UIWebView *)webView didCreateJavaScriptContext:(JSContext *)ctx {
+-(void)webView:(UIWebView *)webView didCreateJavaScriptContext:(JSContext *)ctx {
     _context = ctx;
     ctx[@"viewController"] = self;
+}
+
+-(void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
+    NSNumber *start = (NSNumber *)message.body;
+    uint64_t end = mach_absolute_time();
+    [self endIteration:end - start.longLongValue];
 }
 
 -(void)handlePongRequest:(NSString *)data {
