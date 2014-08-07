@@ -6,7 +6,8 @@ var Mechanism = {
     XhrSync: 4,
     XhrAsync: 5,
     CookieChange: 6,
-    JavaScriptCore: 7
+    JavaScriptCore: 7,
+    UIWebViewExecuteJs: 9
 };
 
 // The link does not need to be appended to the document, that avoids triggering
@@ -49,6 +50,8 @@ function ping(mechanism, startTime) {
         case Mechanism.JavaScriptCore:
             viewController.pong(startTime);
             break;
+        case Mechanism.UIWebViewExecuteJs:
+            return startTime;
     }
 }
 

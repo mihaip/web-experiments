@@ -1,5 +1,6 @@
 var Mechanism = {
-    WkWebViewHandler: 8
+    WkWebViewHandler: 8,
+    WKWebViewExecuteJs: 10
 };
 
 var pingCount = 0;
@@ -8,6 +9,9 @@ function ping(mechanism, startTime) {
     switch (mechanism) {
         case Mechanism.WkWebViewHandler:
             window.webkit.messageHandlers.pong.postMessage(startTime);
+            break;
+        case Mechanism.WKWebViewExecuteJs:
+            return startTime;
             break;
     }
 }

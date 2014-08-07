@@ -5,6 +5,7 @@
 #import <mach/mach_time.h>
 
 enum Mechanism {
+    // UIWebView mechanisms
     LocationHref = 0,
     LocationHash,
     LinkClick,
@@ -13,7 +14,14 @@ enum Mechanism {
     XhrAsync,
     CookieChange,
     JavaScriptCore,
+
+    // WKWebView mechanisms
     WKWebViewHandler,
+
+    // Not actual full mechanisms, but just ways of measuring the native -> web function call time.
+    UIWebViewExecuteJs,
+    WKWebViewExecuteJs,
+
     kNumMechanisms
 };
 
@@ -157,6 +165,13 @@ typedef struct {
         } else {
             [self endIteration:0];
         }
+    } else if (mechanism == UIWebViewExecuteJs) {
+        [_uiWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"ping(%d, '%qu')", mechanism, start]];
+        [self endIteration:mach_absolute_time() - start];
+    } else if (mechanism == WKWebViewExecuteJs) {
+        [_wkWebView evaluateJavaScript:[NSString stringWithFormat:@"ping(%d, '%qu')", mechanism, start] completionHandler:^(id result, NSError *error) {
+            [self endIteration:mach_absolute_time() - start];
+        }];
     } else {
         [_uiWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"ping(%d, '%qu')", mechanism, start]];
     }
@@ -201,7 +216,11 @@ typedef struct {
             case XhrAsync:          name = @"XHR async       "; break;
             case CookieChange:      name = @"document.cookie "; break;
             case JavaScriptCore:    name = @"JavaScriptCore  "; break;
-            case WKWebViewHandler:  name = @"WKWebViewHandler"; break;
+
+            case WKWebViewHandler:  name = @"\nWKWebViewHandler"; break;
+
+            case UIWebViewExecuteJs: name = @"\nUI…ExecuteJs    "; break;
+            case WKWebViewExecuteJs: name = @"WK…ExecuteJs    "; break;
         }
         MechanismTiming *timing = &_mechanismTimings[i];
         double averageMs = [self machTimeToMs:timing->sum]/(double)kNumIterationsPerMechanisms;
