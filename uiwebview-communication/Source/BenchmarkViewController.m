@@ -220,25 +220,25 @@ typedef struct {
     for (size_t i = 0; i < kNumMechanisms; i++) {
         NSString *name = @"";
         switch (i) {
-            case LocationHref:      name = @"location.href   "; break;
-            case LocationHash:      name = @"location.hash   "; break;
-            case LinkClick:         name = @"<a> click       "; break;
-            case FrameSrc:          name = @"frame.src       "; break;
-            case XhrSync:           name = @"XHR sync        "; break;
-            case XhrAsync:          name = @"XHR async       "; break;
-            case CookieChange:      name = @"document.cookie "; break;
-            case JavaScriptCore:    name = @"JavaScriptCore  "; break;
+            case LocationHref:       name = @"location.href   "; [results appendString:@"\nUIWebView\n"]; break;
+            case LocationHash:       name = @"location.hash   "; break;
+            case LinkClick:          name = @"<a> click       "; break;
+            case FrameSrc:           name = @"frame.src       "; break;
+            case XhrSync:            name = @"XHR sync        "; break;
+            case XhrAsync:           name = @"XHR async       "; break;
+            case CookieChange:       name = @"document.cookie "; break;
+            case JavaScriptCore:     name = @"JavaScriptCore  "; break;
 
-            case WKWebViewHandler:  name = @"\nWKWebViewHandler"; break;
+            case WKWebViewHandler:   name = @"WKWebViewHandler"; [results appendString:@"\nWKWebView\n"]; break;
 
-            case UIWebViewExecuteJs: name = @"\nUI…ExecuteJs    "; break;
+            case UIWebViewExecuteJs: name = @"UI…ExecuteJs    "; [results appendString:@"\nJS Execution\n"]; break;
             case WKWebViewExecuteJs: name = @"WK…ExecuteJs    "; break;
         }
         MechanismTiming *timing = &_mechanismTimings[i];
         double averageMs = [self machTimeToMs:timing->sum]/(double)kNumIterationsPerMechanisms;
         double minMs = [self machTimeToMs:timing->min];
         double maxMs = [self machTimeToMs:timing->max];
-        [results appendString:[NSString stringWithFormat:@"%@   %4.3f  %4.3f  %4.3f\n", name, averageMs, minMs, maxMs]];
+        [results appendString:[NSString stringWithFormat:@"%@   %3.2f  %3.2f  %3.2f\n", name, averageMs, minMs, maxMs]];
     }
     _results.text = results;
 }
