@@ -16,7 +16,8 @@ enum Mechanism {
     JavaScriptCore,
 
     // WKWebView mechanisms
-    WKWebViewHandler,
+    WKMessageHandler,
+    WKLocationHash,
 
     // Not actual full mechanisms, but just ways of measuring the native -> web function call time.
     UIWebViewExecuteJs,
@@ -45,7 +46,7 @@ typedef struct {
 
 @end
 
-@interface BenchmarkViewController () <TSWebViewDelegate, WebViewExport, WKScriptMessageHandler>
+@interface BenchmarkViewController () <TSWebViewDelegate, WebViewExport, WKNavigationDelegate, WKScriptMessageHandler>
 
 @end
 
@@ -87,6 +88,7 @@ typedef struct {
         WKWebViewConfiguration *configuration = [WKWebViewConfiguration new];
         [configuration.userContentController addScriptMessageHandler:self name:@"pong"];
         _wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_uiWebView.frame) + 10, width - 30, 56) configuration:configuration];
+        _wkWebView.navigationDelegate = self;
         [self.view addSubview:_wkWebView];
         bottomWebView = _wkWebView;
     }
@@ -171,7 +173,7 @@ typedef struct {
         // Cookie changes don't seem to trigger delegate methods on iOS 8. Since it's a slower mechanism,
         // it's not work investigating.
         [self endIteration:0];
-    } else if (mechanism == WKWebViewHandler) {
+    } else if (mechanism == WKMessageHandler || mechanism == WKLocationHash) {
         if (_wkWebView) {
             [_wkWebView evaluateJavaScript:[NSString stringWithFormat:@"ping(%d, '%qu')", mechanism, start] completionHandler:nil];
         } else {
@@ -181,9 +183,13 @@ typedef struct {
         [_uiWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"ping(%d, '%qu')", mechanism, start]];
         [self endIteration:mach_absolute_time() - start];
     } else if (mechanism == WKWebViewExecuteJs) {
-        [_wkWebView evaluateJavaScript:[NSString stringWithFormat:@"ping(%d, '%qu')", mechanism, start] completionHandler:^(id result, NSError *error) {
-            [self endIteration:mach_absolute_time() - start];
-        }];
+        if (_wkWebView) {
+            [_wkWebView evaluateJavaScript:[NSString stringWithFormat:@"ping(%d, '%qu')", mechanism, start] completionHandler:^(id result, NSError *error) {
+                [self endIteration:mach_absolute_time() - start];
+            }];
+        } else {
+            [self endIteration:0];
+        }
     } else {
         [_uiWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"ping(%d, '%qu')", mechanism, start]];
     }
@@ -229,10 +235,11 @@ typedef struct {
             case CookieChange:       name = @"document.cookie "; break;
             case JavaScriptCore:     name = @"JavaScriptCore  "; break;
 
-            case WKWebViewHandler:   name = @"WKWebViewHandler"; [results appendString:@"\nWKWebView\n"]; break;
+            case WKMessageHandler:   name = @"MessageHandler  "; [results appendString:@"\nWKWebView\n"]; break;
+            case WKLocationHash:     name = @"location.hash   "; break;
 
-            case UIWebViewExecuteJs: name = @"UI…ExecuteJs    "; [results appendString:@"\nJS Execution\n"]; break;
-            case WKWebViewExecuteJs: name = @"WK…ExecuteJs    "; break;
+            case UIWebViewExecuteJs: name = @"UIWebView       "; [results appendString:@"\nJS Execution\n"]; break;
+            case WKWebViewExecuteJs: name = @"WKWebView       "; break;
         }
         MechanismTiming *timing = &_mechanismTimings[i];
         double averageMs = [self machTimeToMs:timing->sum]/(double)kNumIterationsPerMechanisms;
@@ -255,6 +262,7 @@ typedef struct {
         return NO;
     } else if ([request.URL.fragment hasPrefix:@"pong://"]) {
         [self handlePongRequest:[request.URL.fragment substringFromIndex:7]];
+        return NO;
     }
     return YES;
 }
@@ -262,6 +270,19 @@ typedef struct {
 -(void)webView:(UIWebView *)webView didCreateJavaScriptContext:(JSContext *)ctx {
     _context = ctx;
     ctx[@"viewController"] = self;
+}
+
+-(void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    // Even though we put the pong into the fragment, since the URL of the frame is about:blank when using
+    // loadHTMLString, we have to parse it out of the URL by hand, since NSURL handle fragments for about:blank.
+    NSString *url = navigationAction.request.URL.absoluteString;
+    NSRange pongRange = [url rangeOfString:@"pong://"];
+    if (pongRange.location != NSNotFound) {
+        [self handlePongRequest:[url substringFromIndex:pongRange.location + pongRange.length]];
+        decisionHandler(WKNavigationActionPolicyCancel);
+    } else {
+        decisionHandler(WKNavigationActionPolicyAllow);
+    }
 }
 
 -(void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {

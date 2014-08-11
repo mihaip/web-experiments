@@ -1,14 +1,18 @@
 var Mechanism = {
-    WkWebViewHandler: 8,
-    WKWebViewExecuteJs: 10
+    WKMessageHandler: 8,
+    WKLocationHash: 9,
+    WKWebViewExecuteJs: 11
 };
 
 var pingCount = 0;
 function ping(mechanism, startTime) {
     pingCount++;
     switch (mechanism) {
-        case Mechanism.WkWebViewHandler:
+        case Mechanism.WKMessageHandler:
             window.webkit.messageHandlers.pong.postMessage(startTime);
+            break;
+        case Mechanism.WKLocationHash:
+            location.hash = "#pong://" + startTime;
             break;
         case Mechanism.WKWebViewExecuteJs:
             return startTime;
