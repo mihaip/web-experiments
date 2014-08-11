@@ -1,13 +1,14 @@
 var Mechanism = {
     LocationHref: 0,
     LocationHash: 1,
-    LinkClick: 2,
-    FrameSrc: 3,
-    XhrSync: 4,
-    XhrAsync: 5,
-    CookieChange: 6,
-    JavaScriptCore: 7,
-    UIWebViewExecuteJs: 10
+    LocationHashInOut: 2,
+    LinkClick: 3,
+    FrameSrc: 4,
+    XhrSync: 5,
+    XhrAsync: 6,
+    CookieChange: 7,
+    JavaScriptCore: 8,
+    UIWebViewExecuteJs: 12
 };
 
 // The link does not need to be appended to the document, that avoids triggering
@@ -26,6 +27,7 @@ function ping(mechanism, startTime) {
             location.href = pongUrl;
             break;
         case Mechanism.LocationHash:
+        case Mechanism.LocationHashInOut:
             location.hash = "#" + pongUrl;
             break;
         case Mechanism.LinkClick:
@@ -54,6 +56,16 @@ function ping(mechanism, startTime) {
             return startTime;
     }
 }
+
+var kPingHashPrefix = "#ping";
+onhashchange = function(e) {
+    var hash = location.hash;
+    if (hash.lastIndexOf(kPingHashPrefix, 0) == 0) {
+        var pingParamsSerialized = decodeURIComponent(hash.substring(kPingHashPrefix.length));
+        var pingParams = JSON.parse(pingParamsSerialized);
+        ping(pingParams.mechanism, pingParams.startTime);
+    }
+};
 
 // Set up a periodic timer to show that timers are not affected by any of the
 // communication mechanisms.

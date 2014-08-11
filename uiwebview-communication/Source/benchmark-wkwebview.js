@@ -1,7 +1,8 @@
 var Mechanism = {
-    WKMessageHandler: 8,
-    WKLocationHash: 9,
-    WKWebViewExecuteJs: 11
+    WKMessageHandler: 9,
+    WKLocationHash: 10,
+    WKLocationHashInOut: 11,
+    WKWebViewExecuteJs: 13
 };
 
 var pingCount = 0;
@@ -12,6 +13,7 @@ function ping(mechanism, startTime) {
             window.webkit.messageHandlers.pong.postMessage(startTime);
             break;
         case Mechanism.WKLocationHash:
+        case Mechanism.WKLocationHashInOut:
             location.hash = "#pong://" + startTime;
             break;
         case Mechanism.WKWebViewExecuteJs:
@@ -19,6 +21,16 @@ function ping(mechanism, startTime) {
             break;
     }
 }
+
+var kPingHashPrefix = "#ping";
+onhashchange = function(e) {
+    var hash = location.hash;
+    if (hash.lastIndexOf(kPingHashPrefix, 0) == 0) {
+        var pingParamsSerialized = decodeURIComponent(hash.substring(kPingHashPrefix.length));
+        var pingParams = JSON.parse(pingParamsSerialized);
+        ping(pingParams.mechanism, pingParams.startTime);
+    }
+};
 
 // Set up a periodic timer to show that timers are not affected by any of the
 // communication mechanisms.

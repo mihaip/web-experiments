@@ -7,26 +7,28 @@
 enum Mechanism {
     // UIWebView mechanisms
     LocationHref = 0,
-    LocationHash,
-    LinkClick,
-    FrameSrc,
-    XhrSync,
-    XhrAsync,
-    CookieChange,
-    JavaScriptCore,
+    LocationHash = 1,
+    LocationHashInOut = 2,
+    LinkClick = 3,
+    FrameSrc = 4,
+    XhrSync = 5,
+    XhrAsync = 6,
+    CookieChange = 7,
+    JavaScriptCore = 8,
 
     // WKWebView mechanisms
-    WKMessageHandler,
-    WKLocationHash,
+    WKMessageHandler = 9,
+    WKLocationHash = 10,
+    WKLocationHashInOut = 11,
 
     // Not actual full mechanisms, but just ways of measuring the native -> web function call time.
-    UIWebViewExecuteJs,
-    WKWebViewExecuteJs,
+    UIWebViewExecuteJs = 12,
+    WKWebViewExecuteJs = 13,
 
     kNumMechanisms
 };
 
-const NSUInteger kNumIterationsPerMechanisms = 1000;
+const NSUInteger kNumIterationsPerMechanisms = 100;
 const NSUInteger kNumIterations = kNumIterationsPerMechanisms * kNumMechanisms;
 BOOL kOnIOS8;
 
@@ -43,6 +45,12 @@ typedef struct {
 @end
 
 @interface PongUrlProtocol : NSURLProtocol
+
+@end
+
+@interface NSString (URLEncode)
+
+-(NSString *)URLEncode;
 
 @end
 
@@ -135,21 +143,8 @@ typedef struct {
     [_uiWebView loadRequest:[NSURLRequest requestWithURL:benchmarkUrl]];
 
     if (_wkWebView) {
-        // Serve HTML inline until https://devforums.apple.com/message/1009455 is fixed.
-        NSString *htmlPath = [NSBundle.mainBundle pathForResource:@"benchmark-wkwebview" ofType:@"html"];
-        NSString *jsPath = [NSBundle.mainBundle pathForResource:@"benchmark-wkwebview" ofType:@"js"];
-        NSString *cssPath = [NSBundle.mainBundle pathForResource:@"benchmark" ofType:@"css"];
-
-        NSString *benchmarkHtml = [NSString stringWithContentsOfFile:htmlPath encoding:NSUTF8StringEncoding error:nil];
-        NSString *benchmarkJs = [NSString stringWithContentsOfFile:jsPath encoding:NSUTF8StringEncoding error:nil];
-        NSString *benchmarkCss = [NSString stringWithContentsOfFile:cssPath encoding:NSUTF8StringEncoding error:nil];
-
-        NSString *benchmarkScriptTag = [NSString stringWithFormat:@"<script>%@</script>", benchmarkJs];
-        NSString *benchmarkStyleTag = [NSString stringWithFormat:@"<style>%@</style>", benchmarkCss];
-        benchmarkHtml = [benchmarkHtml stringByReplacingOccurrencesOfString:@"<script src=\"benchmark-wkwebview.js\"></script>" withString:benchmarkScriptTag];
-        benchmarkHtml = [benchmarkHtml stringByReplacingOccurrencesOfString:@"<link rel=\"stylesheet\" href=\"benchmark.css\">" withString:benchmarkStyleTag];
-
-        [_wkWebView loadHTMLString:benchmarkHtml baseURL:nil];
+        // Serve HTML from a server until https://devforums.apple.com/message/1009455 is fixed.
+        [_wkWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://persistent.info/tmp/webview/benchmark-wkwebview.html"]]];
     }
 }
 
@@ -173,9 +168,15 @@ typedef struct {
         // Cookie changes don't seem to trigger delegate methods on iOS 8. Since it's a slower mechanism,
         // it's not work investigating.
         [self endIteration:0];
-    } else if (mechanism == WKMessageHandler || mechanism == WKLocationHash) {
+    } else if (mechanism == WKMessageHandler || mechanism == WKLocationHash || mechanism == WKLocationHashInOut) {
         if (_wkWebView) {
-            [_wkWebView evaluateJavaScript:[NSString stringWithFormat:@"ping(%d, '%qu')", mechanism, start] completionHandler:nil];
+            if (mechanism == WKLocationHashInOut) {
+                NSString *pingParams = [NSString stringWithFormat:@"{\"mechanism\": %d, \"startTime\": \"%qu\"}", mechanism, start];
+                NSURL *pingUrl = [NSURL URLWithString:[NSString stringWithFormat:@"#ping%@", pingParams.URLEncode] relativeToURL:_wkWebView.URL];
+                [_wkWebView loadRequest:[NSURLRequest requestWithURL:pingUrl]];
+            } else {
+                [_wkWebView evaluateJavaScript:[NSString stringWithFormat:@"ping(%d, '%qu')", mechanism, start] completionHandler:nil];
+            }
         } else {
             [self endIteration:0];
         }
@@ -190,6 +191,10 @@ typedef struct {
         } else {
             [self endIteration:0];
         }
+    } else if (mechanism == LocationHashInOut) {
+        NSString *pingParams = [NSString stringWithFormat:@"{\"mechanism\": %d, \"startTime\": \"%qu\"}", mechanism, start];
+        NSURL *pingUrl = [NSURL URLWithString:[NSString stringWithFormat:@"#ping%@", pingParams.URLEncode] relativeToURL:_uiWebView.request.URL];
+        [_uiWebView loadRequest:[NSURLRequest requestWithURL:pingUrl]];
     } else {
         [_uiWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"ping(%d, '%qu')", mechanism, start]];
     }
@@ -226,20 +231,22 @@ typedef struct {
     for (size_t i = 0; i < kNumMechanisms; i++) {
         NSString *name = @"";
         switch (i) {
-            case LocationHref:       name = @"location.href   "; [results appendString:@"\nUIWebView\n"]; break;
-            case LocationHash:       name = @"location.hash   "; break;
-            case LinkClick:          name = @"<a> click       "; break;
-            case FrameSrc:           name = @"frame.src       "; break;
-            case XhrSync:            name = @"XHR sync        "; break;
-            case XhrAsync:           name = @"XHR async       "; break;
-            case CookieChange:       name = @"document.cookie "; break;
-            case JavaScriptCore:     name = @"JavaScriptCore  "; break;
+            case LocationHref:        name = @"location.href    "; [results appendString:@"\nUIWebView\n"]; break;
+            case LocationHash:        name = @"location.hash    "; break;
+            case LocationHashInOut:   name = @"location.hash i/o"; break;
+            case LinkClick:           name = @"<a> click        "; break;
+            case FrameSrc:            name = @"frame.src        "; break;
+            case XhrSync:             name = @"XHR sync         "; break;
+            case XhrAsync:            name = @"XHR async        "; break;
+            case CookieChange:        name = @"document.cookie  "; break;
+            case JavaScriptCore:      name = @"JavaScriptCore   "; break;
 
-            case WKMessageHandler:   name = @"MessageHandler  "; [results appendString:@"\nWKWebView\n"]; break;
-            case WKLocationHash:     name = @"location.hash   "; break;
+            case WKMessageHandler:    name = @"MessageHandler   "; [results appendString:@"\nWKWebView\n"]; break;
+            case WKLocationHash:      name = @"location.hash    "; break;
+            case WKLocationHashInOut: name = @"location.hash i/o"; break;
 
-            case UIWebViewExecuteJs: name = @"UIWebView       "; [results appendString:@"\nJS Execution\n"]; break;
-            case WKWebViewExecuteJs: name = @"WKWebView       "; break;
+            case UIWebViewExecuteJs:  name = @"UIWebView        "; [results appendString:@"\nJS Execution\n"]; break;
+            case WKWebViewExecuteJs:  name = @"WKWebView        "; break;
         }
         MechanismTiming *timing = &_mechanismTimings[i];
         double averageMs = [self machTimeToMs:timing->sum]/(double)kNumIterationsPerMechanisms;
@@ -322,6 +329,14 @@ typedef struct {
 }
 
 -(void)stopLoading {
+}
+
+@end
+
+@implementation NSString (URLEncode)
+
+-(NSString *)URLEncode {
+    return (__bridge_transfer NSString *) CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)self, NULL, (CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ", CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding));
 }
 
 @end
