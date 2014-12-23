@@ -23,13 +23,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		911F22191809D2EB00328F9A /* UIWebView Communication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UIWebView Communication.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		911F22191809D2EB00328F9A /* WebView Communication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WebView Communication.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		911F221C1809D2EB00328F9A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		911F221E1809D2EB00328F9A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		911F22201809D2EB00328F9A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		911F22241809D2EB00328F9A /* UIWebView Communication-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UIWebView Communication-Info.plist"; sourceTree = "<group>"; };
+		911F22241809D2EB00328F9A /* WebView Communication-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WebView Communication-Info.plist"; sourceTree = "<group>"; };
 		911F22281809D2EB00328F9A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		911F222A1809D2EB00328F9A /* UIWebView Communication-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIWebView Communication-Prefix.pch"; sourceTree = "<group>"; };
+		911F222A1809D2EB00328F9A /* WebView Communication-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WebView Communication-Prefix.pch"; sourceTree = "<group>"; };
 		911F222B1809D2EB00328F9A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		911F222C1809D2EB00328F9A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		91D3E17B180BC36E001FA549 /* BenchmarkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BenchmarkViewController.h; sourceTree = "<group>"; };
@@ -71,7 +71,7 @@
 		911F221A1809D2EB00328F9A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				911F22191809D2EB00328F9A /* UIWebView Communication.app */,
+				911F22191809D2EB00328F9A /* WebView Communication.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -109,9 +109,9 @@
 		911F22231809D2EB00328F9A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				911F22241809D2EB00328F9A /* UIWebView Communication-Info.plist */,
+				911F22241809D2EB00328F9A /* WebView Communication-Info.plist */,
 				911F22281809D2EB00328F9A /* main.m */,
-				911F222A1809D2EB00328F9A /* UIWebView Communication-Prefix.pch */,
+				911F222A1809D2EB00328F9A /* WebView Communication-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -119,9 +119,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		911F22181809D2EB00328F9A /* UIWebView Communication */ = {
+		911F22181809D2EB00328F9A /* WebView Communication */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 911F22451809D2EB00328F9A /* Build configuration list for PBXNativeTarget "UIWebView Communication" */;
+			buildConfigurationList = 911F22451809D2EB00328F9A /* Build configuration list for PBXNativeTarget "WebView Communication" */;
 			buildPhases = (
 				911F22151809D2EB00328F9A /* Sources */,
 				911F22161809D2EB00328F9A /* Frameworks */,
@@ -131,9 +131,9 @@
 			);
 			dependencies = (
 			);
-			name = "UIWebView Communication";
+			name = "WebView Communication";
 			productName = "UIWebView Communication";
-			productReference = 911F22191809D2EB00328F9A /* UIWebView Communication.app */;
+			productReference = 911F22191809D2EB00328F9A /* WebView Communication.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -145,7 +145,7 @@
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "Mihai Parparita";
 			};
-			buildConfigurationList = 911F22141809D2EB00328F9A /* Build configuration list for PBXProject "UIWebView Communication" */;
+			buildConfigurationList = 911F22141809D2EB00328F9A /* Build configuration list for PBXProject "WebView Communication" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -157,7 +157,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				911F22181809D2EB00328F9A /* UIWebView Communication */,
+				911F22181809D2EB00328F9A /* WebView Communication */,
 			);
 		};
 /* End PBXProject section */
@@ -270,9 +270,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Source/UIWebView Communication-Prefix.pch";
-				INFOPLIST_FILE = "Source/UIWebView Communication-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "Source/WebView Communication-Prefix.pch";
+				INFOPLIST_FILE = "Source/WebView Communication-Info.plist";
+				PRODUCT_NAME = "WebView Communication";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -283,9 +283,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Source/UIWebView Communication-Prefix.pch";
-				INFOPLIST_FILE = "Source/UIWebView Communication-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "Source/WebView Communication-Prefix.pch";
+				INFOPLIST_FILE = "Source/WebView Communication-Info.plist";
+				PRODUCT_NAME = "WebView Communication";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -293,7 +293,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		911F22141809D2EB00328F9A /* Build configuration list for PBXProject "UIWebView Communication" */ = {
+		911F22141809D2EB00328F9A /* Build configuration list for PBXProject "WebView Communication" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				911F22431809D2EB00328F9A /* Debug */,
@@ -302,7 +302,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		911F22451809D2EB00328F9A /* Build configuration list for PBXNativeTarget "UIWebView Communication" */ = {
+		911F22451809D2EB00328F9A /* Build configuration list for PBXNativeTarget "WebView Communication" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				911F22461809D2EB00328F9A /* Debug */,
