@@ -291,7 +291,8 @@ typedef struct {
 
 -(void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     // Even though we put the pong into the fragment, since the URL of the frame is about:blank when using
-    // loadHTMLString, we have to parse it out of the URL by hand, since NSURL handle fragments for about:blank.
+    // loadHTMLString, we have to parse it out of the URL by hand, since NSURL doesn't handle fragments for
+    // about:blank.
     NSString *url = navigationAction.request.URL.absoluteString;
     NSRange pongRange = [url rangeOfString:@"pong://"];
     if (pongRange.location != NSNotFound) {
