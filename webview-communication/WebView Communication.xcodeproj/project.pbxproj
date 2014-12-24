@@ -132,7 +132,7 @@
 			dependencies = (
 			);
 			name = "WebView Communication";
-			productName = "UIWebView Communication";
+			productName = "WebView Communication";
 			productReference = 911F22191809D2EB00328F9A /* WebView Communication.app */;
 			productType = "com.apple.product-type.application";
 		};
