@@ -143,8 +143,18 @@ typedef struct {
     [_uiWebView loadRequest:[NSURLRequest requestWithURL:benchmarkUrl]];
 
     if (_wkWebView) {
-        // Serve HTML from a server until https://devforums.apple.com/message/1009455 is fixed.
-        [_wkWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://persistent.info/tmp/webview/benchmark-wkwebview.html"]]];
+        // Work around an iOS 8 bug that prevents WKWebView from reading bundle resources by copying them to /tmp.
+        // See http://stackoverflow.com/a/26054170/343108 for details.
+        NSError *copyError;
+        NSString *tmpPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"bundle"];
+        // Remove instances from previous runs, if any.
+        [NSFileManager.defaultManager removeItemAtPath:tmpPath error:nil];
+        if (![NSFileManager.defaultManager copyItemAtPath:NSBundle.mainBundle.bundlePath toPath:tmpPath error:&copyError]) {
+            NSLog(@"Error copying bundle files to /tmp: %@", copyError);
+        }
+        NSString *benchmarkPath = [tmpPath stringByAppendingPathComponent:@"benchmark-wkwebview.html"];
+        NSURL *benchmarkUrl = [NSURL fileURLWithPath:benchmarkPath];
+        [_wkWebView loadRequest:[NSURLRequest requestWithURL:benchmarkUrl]];
     }
 }
 
