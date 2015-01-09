@@ -2,9 +2,9 @@
 
 Various prototypes, experiments and proofs of concept that have appeared on [persistent.info](http://blog.persistent.info/) over the years. Some may no longer be applicable, but here they are archived for posterity.
 
-* `*WebView` Communication Mechanisms - _October 2013_
+* `*WebView` Communication Mechanisms - _October 2013_, _January 2015_
   * [Source](https://github.com/mihaip/web-experiments/tree/master/webview-communication)
-  * [Blog post](http://blog.persistent.info/2013/10/a-faster-uiwebview-communication.html)
+  * [2013 blog post](http://blog.persistent.info/2013/10/a-faster-uiwebview-communication.html), [2015 blog post](http://blog.persistent.info/2015/01/wkwebview-communication-latency.html)
 * Image-based SVG masking - _June 2013_
   * [Demo](http://persistent.info/web-experiments/svg-masking/)
   * [Source](https://github.com/mihaip/web-experiments/tree/master/svg-masking)
