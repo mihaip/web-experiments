@@ -20,10 +20,12 @@ enum Mechanism {
     WKMessageHandler = 9,
     WKLocationHash = 10,
     WKLocationHashInOut = 11,
+    WKAlert = 12,
+    WKPrompt = 13,
 
     // Not actual full mechanisms, but just ways of measuring the native -> web function call time.
-    UIWebViewExecuteJs = 12,
-    WKWebViewExecuteJs = 13,
+    UIWebViewExecuteJs = 14,
+    WKWebViewExecuteJs = 15,
 
     kNumMechanisms
 };
@@ -54,7 +56,7 @@ typedef struct {
 
 @end
 
-@interface BenchmarkViewController () <TSWebViewDelegate, WebViewExport, WKNavigationDelegate, WKScriptMessageHandler>
+@interface BenchmarkViewController () <TSWebViewDelegate, WebViewExport, WKNavigationDelegate, WKScriptMessageHandler, WKUIDelegate>
 
 @end
 
@@ -97,6 +99,7 @@ typedef struct {
         [configuration.userContentController addScriptMessageHandler:self name:@"pong"];
         _wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_uiWebView.frame) + 10, width - 30, 56) configuration:configuration];
         _wkWebView.navigationDelegate = self;
+        _wkWebView.UIDelegate = self;
         [self.view addSubview:_wkWebView];
         bottomWebView = _wkWebView;
     }
@@ -178,7 +181,7 @@ typedef struct {
         // Cookie changes don't seem to trigger delegate methods on iOS 8. Since it's a slower mechanism,
         // it's not work investigating.
         [self endIteration:0];
-    } else if (mechanism == WKMessageHandler || mechanism == WKLocationHash || mechanism == WKLocationHashInOut) {
+    } else if (mechanism == WKMessageHandler || mechanism == WKLocationHash || mechanism == WKLocationHashInOut || mechanism == WKAlert || mechanism == WKPrompt) {
         if (_wkWebView) {
             if (mechanism == WKLocationHashInOut) {
                 NSString *pingParams = [NSString stringWithFormat:@"{\"mechanism\": %d, \"startTime\": \"%qu\"}", mechanism, start];
@@ -254,6 +257,8 @@ typedef struct {
             case WKMessageHandler:    name = @"MessageHandler   "; [results appendString:@"\nWKWebView\n"]; break;
             case WKLocationHash:      name = @"location.hash    "; break;
             case WKLocationHashInOut: name = @"location.hash i/o"; break;
+            case WKAlert:             name = @"window.alert()   "; break;
+            case WKPrompt:            name = @"window.prompt()  "; break;
 
             case UIWebViewExecuteJs:  name = @"UIWebView        "; [results appendString:@"\nJS Execution\n"]; break;
             case WKWebViewExecuteJs:  name = @"WKWebView        "; break;
@@ -273,6 +278,20 @@ typedef struct {
     return (double)(machTime) * (double)timebase.numer / (double)timebase.denom / 1e6;
 }
 
+-(void)handlePongRequest:(NSString *)data {
+    uint64_t start = data.longLongValue;
+    uint64_t end = mach_absolute_time();
+    [self endIteration:end - start];
+}
+
+-(void)pong:(JSValue *)value {
+    uint64_t start = [value toNumber].longLongValue;
+    uint64_t end = mach_absolute_time();
+    [self endIteration:end - start];
+}
+
+#pragma mark UIWebViewDelegate
+
 -(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     if ([request.URL.scheme isEqualToString:@"pong"]) {
         [self handlePongRequest:request.URL.host];
@@ -289,6 +308,8 @@ typedef struct {
     ctx[@"viewController"] = self;
 }
 
+#pragma mark WKNavigationDelegate
+
 -(void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     // Even though we put the pong into the fragment, since the URL of the frame is about:blank when using
     // loadHTMLString, we have to parse it out of the URL by hand, since NSURL doesn't handle fragments for
@@ -303,22 +324,36 @@ typedef struct {
     }
 }
 
+#pragma mark WKUIDelegate
+
+-(void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)())completionHandler {
+    NSRange pongRange = [message rangeOfString:@"pong:"];
+    if (pongRange.location == 0) {
+        [self handlePongRequest:[message substringFromIndex:pongRange.location + pongRange.length]];
+        completionHandler();
+    } else {
+        // Normal alert UI implementation would go here
+        completionHandler();
+    }
+}
+
+-(void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString *))completionHandler {
+    NSRange pongRange = [prompt rangeOfString:@"pong:"];
+    if (pongRange.location == 0) {
+        [self handlePongRequest:[prompt substringFromIndex:pongRange.location + pongRange.length]];
+        completionHandler(@"");
+    } else {
+        // Normal prompt UI implementation would go here
+        completionHandler(@"");
+    }
+}
+
+#pragma mark WKScriptMessageHandler
+
 -(void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
     NSNumber *start = (NSNumber *)message.body;
     uint64_t end = mach_absolute_time();
     [self endIteration:end - start.longLongValue];
-}
-
--(void)handlePongRequest:(NSString *)data {
-    uint64_t start = data.longLongValue;
-    uint64_t end = mach_absolute_time();
-    [self endIteration:end - start];
-}
-
--(void)pong:(JSValue *)value {
-    uint64_t start = [value toNumber].longLongValue;
-    uint64_t end = mach_absolute_time();
-    [self endIteration:end - start];
 }
 
 @end

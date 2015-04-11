@@ -2,7 +2,9 @@ var Mechanism = {
     WKMessageHandler: 9,
     WKLocationHash: 10,
     WKLocationHashInOut: 11,
-    WKWebViewExecuteJs: 13
+    WKAlert: 12,
+    WKPrompt: 13,
+    WKWebViewExecuteJs: 15
 };
 
 var pingCount = 0;
@@ -15,6 +17,12 @@ function ping(mechanism, startTime) {
         case Mechanism.WKLocationHash:
         case Mechanism.WKLocationHashInOut:
             location.hash = "#pong://" + startTime;
+            break;
+        case Mechanism.WKAlert:
+            window.alert("pong:" + startTime);
+            break;
+        case Mechanism.WKPrompt:
+            window.prompt("pong:" + startTime);
             break;
         case Mechanism.WKWebViewExecuteJs:
             return startTime;
