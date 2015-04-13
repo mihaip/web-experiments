@@ -1,14 +1,15 @@
 var Mechanism = {
     LocationHref: 0,
     LocationHash: 1,
-    LocationHashInOut: 2,
-    LinkClick: 3,
-    FrameSrc: 4,
-    XhrSync: 5,
-    XhrAsync: 6,
-    CookieChange: 7,
-    JavaScriptCore: 8,
-    UIWebViewExecuteJs: 14
+    LocationReplaceHash: 2,
+    LocationHashInOut: 3,
+    LinkClick: 4,
+    FrameSrc: 5,
+    XhrSync: 6,
+    XhrAsync: 7,
+    CookieChange: 8,
+    JavaScriptCore: 9,
+    UIWebViewExecuteJs: 16
 };
 
 // The link does not need to be appended to the document, that avoids triggering
@@ -29,6 +30,9 @@ function ping(mechanism, startTime) {
         case Mechanism.LocationHash:
         case Mechanism.LocationHashInOut:
             location.hash = "#" + pongUrl;
+            break;
+        case Mechanism.LocationReplaceHash:
+            location.replace("#" + pongUrl);
             break;
         case Mechanism.LinkClick:
             linkNode.href = pongUrl;

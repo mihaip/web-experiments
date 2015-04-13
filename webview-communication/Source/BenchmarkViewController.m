@@ -8,24 +8,26 @@ enum Mechanism {
     // UIWebView mechanisms
     LocationHref = 0,
     LocationHash = 1,
-    LocationHashInOut = 2,
-    LinkClick = 3,
-    FrameSrc = 4,
-    XhrSync = 5,
-    XhrAsync = 6,
-    CookieChange = 7,
-    JavaScriptCore = 8,
+    LocationReplaceHash = 2,
+    LocationHashInOut = 3,
+    LinkClick = 4,
+    FrameSrc = 5,
+    XhrSync = 6,
+    XhrAsync = 7,
+    CookieChange = 8,
+    JavaScriptCore = 9,
 
     // WKWebView mechanisms
-    WKMessageHandler = 9,
-    WKLocationHash = 10,
-    WKLocationHashInOut = 11,
-    WKAlert = 12,
-    WKPrompt = 13,
+    WKMessageHandler = 10,
+    WKLocationHash = 11,
+    WKLocationReplaceHash = 12,
+    WKLocationHashInOut = 13,
+    WKAlert = 14,
+    WKPrompt = 15,
 
     // Not actual full mechanisms, but just ways of measuring the native -> web function call time.
-    UIWebViewExecuteJs = 14,
-    WKWebViewExecuteJs = 15,
+    UIWebViewExecuteJs = 16,
+    WKWebViewExecuteJs = 17,
 
     kNumMechanisms
 };
@@ -181,7 +183,7 @@ typedef struct {
         // Cookie changes don't seem to trigger delegate methods on iOS 8. Since it's a slower mechanism,
         // it's not work investigating.
         [self endIteration:0];
-    } else if (mechanism == WKMessageHandler || mechanism == WKLocationHash || mechanism == WKLocationHashInOut || mechanism == WKAlert || mechanism == WKPrompt) {
+    } else if (mechanism == WKMessageHandler || mechanism == WKLocationHash || mechanism == WKLocationReplaceHash || mechanism == WKLocationHashInOut || mechanism == WKAlert || mechanism == WKPrompt) {
         if (_wkWebView) {
             if (mechanism == WKLocationHashInOut) {
                 NSString *pingParams = [NSString stringWithFormat:@"{\"mechanism\": %d, \"startTime\": \"%qu\"}", mechanism, start];
@@ -244,24 +246,26 @@ typedef struct {
     for (size_t i = 0; i < kNumMechanisms; i++) {
         NSString *name = @"";
         switch (i) {
-            case LocationHref:        name = @"location.href    "; [results appendString:@"\nUIWebView\n"]; break;
-            case LocationHash:        name = @"location.hash    "; break;
-            case LocationHashInOut:   name = @"location.hash i/o"; break;
-            case LinkClick:           name = @"<a> click        "; break;
-            case FrameSrc:            name = @"frame.src        "; break;
-            case XhrSync:             name = @"XHR sync         "; break;
-            case XhrAsync:            name = @"XHR async        "; break;
-            case CookieChange:        name = @"document.cookie  "; break;
-            case JavaScriptCore:      name = @"JavaScriptCore   "; break;
+            case LocationHref:          name = @"location.href    "; [results appendString:@"\nUIWebView\n"]; break;
+            case LocationHash:          name = @"location.hash    "; break;
+            case LocationReplaceHash:   name = @"location.replace "; break;
+            case LocationHashInOut:     name = @"location.hash i/o"; break;
+            case LinkClick:             name = @"<a> click        "; break;
+            case FrameSrc:              name = @"frame.src        "; break;
+            case XhrSync:               name = @"XHR sync         "; break;
+            case XhrAsync:              name = @"XHR async        "; break;
+            case CookieChange:          name = @"document.cookie  "; break;
+            case JavaScriptCore:        name = @"JavaScriptCore   "; break;
 
-            case WKMessageHandler:    name = @"MessageHandler   "; [results appendString:@"\nWKWebView\n"]; break;
-            case WKLocationHash:      name = @"location.hash    "; break;
-            case WKLocationHashInOut: name = @"location.hash i/o"; break;
-            case WKAlert:             name = @"window.alert()   "; break;
-            case WKPrompt:            name = @"window.prompt()  "; break;
+            case WKMessageHandler:      name = @"MessageHandler   "; [results appendString:@"\nWKWebView\n"]; break;
+            case WKLocationHash:        name = @"location.hash    "; break;
+            case WKLocationReplaceHash: name = @"location.replace "; break;
+            case WKLocationHashInOut:   name = @"location.hash i/o"; break;
+            case WKAlert:               name = @"window.alert()   "; break;
+            case WKPrompt:              name = @"window.prompt()  "; break;
 
-            case UIWebViewExecuteJs:  name = @"UIWebView        "; [results appendString:@"\nJS Execution\n"]; break;
-            case WKWebViewExecuteJs:  name = @"WKWebView        "; break;
+            case UIWebViewExecuteJs:    name = @"UIWebView        "; [results appendString:@"\nJS Execution\n"]; break;
+            case WKWebViewExecuteJs:    name = @"WKWebView        "; break;
         }
         MechanismTiming *timing = &_mechanismTimings[i];
         double averageMs = [self machTimeToMs:timing->sum]/(double)kNumIterationsPerMechanisms;
