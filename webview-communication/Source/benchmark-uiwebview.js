@@ -9,7 +9,7 @@ var Mechanism = {
     XhrAsync: 7,
     CookieChange: 8,
     JavaScriptCore: 9,
-    UIWebViewExecuteJs: 16
+    UIWebViewExecuteJs: 17
 };
 
 // The link does not need to be appended to the document, that avoids triggering

@@ -24,10 +24,11 @@ enum Mechanism {
     WKLocationHashInOut = 13,
     WKAlert = 14,
     WKPrompt = 15,
+    WKTitle = 16,
 
     // Not actual full mechanisms, but just ways of measuring the native -> web function call time.
-    UIWebViewExecuteJs = 16,
-    WKWebViewExecuteJs = 17,
+    UIWebViewExecuteJs = 17,
+    WKWebViewExecuteJs = 18,
 
     kNumMechanisms
 };
@@ -102,6 +103,7 @@ typedef struct {
         _wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(_uiWebView.frame) + 10, width - 30, 56) configuration:configuration];
         _wkWebView.navigationDelegate = self;
         _wkWebView.UIDelegate = self;
+        [_wkWebView addObserver:self forKeyPath:@"title" options:NSKeyValueObservingOptionNew context:NULL];
         [self.view addSubview:_wkWebView];
         bottomWebView = _wkWebView;
     }
@@ -183,7 +185,7 @@ typedef struct {
         // Cookie changes don't seem to trigger delegate methods on iOS 8. Since it's a slower mechanism,
         // it's not work investigating.
         [self endIteration:0];
-    } else if (mechanism == WKMessageHandler || mechanism == WKLocationHash || mechanism == WKLocationReplaceHash || mechanism == WKLocationHashInOut || mechanism == WKAlert || mechanism == WKPrompt) {
+    } else if (mechanism == WKMessageHandler || mechanism == WKLocationHash || mechanism == WKLocationReplaceHash || mechanism == WKLocationHashInOut || mechanism == WKAlert || mechanism == WKPrompt || mechanism == WKTitle) {
         if (_wkWebView) {
             if (mechanism == WKLocationHashInOut) {
                 NSString *pingParams = [NSString stringWithFormat:@"{\"mechanism\": %d, \"startTime\": \"%qu\"}", mechanism, start];
@@ -263,6 +265,7 @@ typedef struct {
             case WKLocationHashInOut:   name = @"location.hash i/o"; break;
             case WKAlert:               name = @"window.alert()   "; break;
             case WKPrompt:              name = @"window.prompt()  "; break;
+            case WKTitle:               name = @"document.title   "; break;
 
             case UIWebViewExecuteJs:    name = @"UIWebView        "; [results appendString:@"\nJS Execution\n"]; break;
             case WKWebViewExecuteJs:    name = @"WKWebView        "; break;
@@ -360,8 +363,19 @@ typedef struct {
     [self endIteration:end - start.longLongValue];
 }
 
-@end
+#pragma mark KVO
 
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (object == _wkWebView && [keyPath isEqualToString:@"title"]) {
+        NSString *title = change[NSKeyValueChangeNewKey];
+        NSRange pongRange = [title rangeOfString:@"pong:"];
+        if (pongRange.location == 0) {
+            [self handlePongRequest:[title substringFromIndex:pongRange.location + pongRange.length]];
+        }
+    }
+}
+
+@end
 
 @implementation PongUrlProtocol
 
