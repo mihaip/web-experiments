@@ -1,0 +1,305 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		914F10071C30B05700D16FEB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 914F10061C30B05700D16FEB /* AppDelegate.m */; };
+		914F100A1C30B05700D16FEB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 914F10091C30B05700D16FEB /* main.m */; };
+		914F100C1C30B05700D16FEB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 914F100B1C30B05700D16FEB /* Assets.xcassets */; };
+		914F100F1C30B05700D16FEB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 914F100D1C30B05700D16FEB /* MainMenu.xib */; };
+		914F10171C30B18500D16FEB /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 914F10161C30B18500D16FEB /* WebKit.framework */; };
+		914F101A1C30B22D00D16FEB /* web in Resources */ = {isa = PBXBuildFile; fileRef = 914F10191C30B22D00D16FEB /* web */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		914F10021C30B05700D16FEB /* React Multiple Windows.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "React Multiple Windows.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		914F10051C30B05700D16FEB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		914F10061C30B05700D16FEB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		914F10091C30B05700D16FEB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		914F100B1C30B05700D16FEB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		914F100E1C30B05700D16FEB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		914F10101C30B05700D16FEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		914F10161C30B18500D16FEB /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		914F10191C30B22D00D16FEB /* web */ = {isa = PBXFileReference; lastKnownFileType = folder; name = web; path = ../web; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		914F0FFF1C30B05700D16FEB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				914F10171C30B18500D16FEB /* WebKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		914F0FF91C30B05700D16FEB = {
+			isa = PBXGroup;
+			children = (
+				914F10191C30B22D00D16FEB /* web */,
+				914F10181C30B18C00D16FEB /* Frameworks */,
+				914F10041C30B05700D16FEB /* React Multiple Windows */,
+				914F10031C30B05700D16FEB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		914F10031C30B05700D16FEB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				914F10021C30B05700D16FEB /* React Multiple Windows.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		914F10041C30B05700D16FEB /* React Multiple Windows */ = {
+			isa = PBXGroup;
+			children = (
+				914F10051C30B05700D16FEB /* AppDelegate.h */,
+				914F10061C30B05700D16FEB /* AppDelegate.m */,
+				914F100B1C30B05700D16FEB /* Assets.xcassets */,
+				914F100D1C30B05700D16FEB /* MainMenu.xib */,
+				914F10101C30B05700D16FEB /* Info.plist */,
+				914F10081C30B05700D16FEB /* Supporting Files */,
+			);
+			path = "React Multiple Windows";
+			sourceTree = "<group>";
+		};
+		914F10081C30B05700D16FEB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				914F10091C30B05700D16FEB /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		914F10181C30B18C00D16FEB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				914F10161C30B18500D16FEB /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		914F10011C30B05700D16FEB /* React Multiple Windows */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 914F10131C30B05700D16FEB /* Build configuration list for PBXNativeTarget "React Multiple Windows" */;
+			buildPhases = (
+				914F0FFE1C30B05700D16FEB /* Sources */,
+				914F0FFF1C30B05700D16FEB /* Frameworks */,
+				914F10001C30B05700D16FEB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "React Multiple Windows";
+			productName = "React Multiple Windows";
+			productReference = 914F10021C30B05700D16FEB /* React Multiple Windows.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		914F0FFA1C30B05700D16FEB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = persistent.info;
+				TargetAttributes = {
+					914F10011C30B05700D16FEB = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = 914F0FFD1C30B05700D16FEB /* Build configuration list for PBXProject "React Multiple Windows" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 914F0FF91C30B05700D16FEB;
+			productRefGroup = 914F10031C30B05700D16FEB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				914F10011C30B05700D16FEB /* React Multiple Windows */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		914F10001C30B05700D16FEB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				914F101A1C30B22D00D16FEB /* web in Resources */,
+				914F100C1C30B05700D16FEB /* Assets.xcassets in Resources */,
+				914F100F1C30B05700D16FEB /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		914F0FFE1C30B05700D16FEB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				914F100A1C30B05700D16FEB /* main.m in Sources */,
+				914F10071C30B05700D16FEB /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		914F100D1C30B05700D16FEB /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				914F100E1C30B05700D16FEB /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		914F10111C30B05700D16FEB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		914F10121C30B05700D16FEB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		914F10141C30B05700D16FEB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "React Multiple Windows/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "info.peristent.React-Multiple-Windows";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		914F10151C30B05700D16FEB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "React Multiple Windows/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "info.peristent.React-Multiple-Windows";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		914F0FFD1C30B05700D16FEB /* Build configuration list for PBXProject "React Multiple Windows" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				914F10111C30B05700D16FEB /* Debug */,
+				914F10121C30B05700D16FEB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		914F10131C30B05700D16FEB /* Build configuration list for PBXNativeTarget "React Multiple Windows" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				914F10141C30B05700D16FEB /* Debug */,
+				914F10151C30B05700D16FEB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 914F0FFA1C30B05700D16FEB /* Project object */;
+}
