@@ -5,6 +5,7 @@ Various prototypes, experiments and proofs of concept that have appeared on [per
 * Multiple Windows in Hybrid React Desktop Apps - _December 2015_
   * [Source](https://github.com/mihaip/web-experiments/tree/master/react-multiple-windows)
   * [Web Demo](http://persistent.info/web-experiments/react-multiple-windows/web/)
+  * [Blog post](http://blog.persistent.info/2016/01/multiple-windows-in-hybrid-react.html)
 * `*WebView` Communication Mechanisms - _October 2013_, _January 2015_
   * [Source](https://github.com/mihaip/web-experiments/tree/master/webview-communication)
   * [2013 blog post](http://blog.persistent.info/2013/10/a-faster-uiwebview-communication.html), [2015 blog post](http://blog.persistent.info/2015/01/wkwebview-communication-latency.html)
