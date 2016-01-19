@@ -2,6 +2,10 @@
 
 Various prototypes, experiments and proofs of concept that have appeared on [persistent.info](http://blog.persistent.info/) over the years. Some may no longer be applicable, but here they are archived for posterity.
 
+* Static Resource Grafting - _January 2016_
+  * [Source](https://github.com/mihaip/web-experiments/tree/master/static-resource-grafting)
+  * [Web Demo](http://persistent.info/web-experiments/static-resource-grafting/site/)
+  * [Blog post](http://blog.persistent.info/2016/01/static-resource-grafting.html)
 * Multiple Windows in Hybrid React Desktop Apps - _December 2015_
   * [Source](https://github.com/mihaip/web-experiments/tree/master/react-multiple-windows)
   * [Web Demo](http://persistent.info/web-experiments/react-multiple-windows/web/)

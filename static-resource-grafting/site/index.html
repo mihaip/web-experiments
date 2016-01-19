@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Static Resource Grafting Demo</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <script src="script.js"></script>
+  <style>
+    body {
+      font-family: Helvetica, Arial, san-serif;
+    }
+
+    ol ol {
+      list-style-type: lower-roman;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Static Resource Grafting Demo</h1>
+
+<p>Demo of <a href="http://blog.persistent.info/2016/01/static-resource-grafting.html">static resource grafting</a>.</p>
+
+<h2>Instructions</h2>
+
+<ol>
+  <li>Observe that the two demo paragraphs below indicate that they have not been "grafted."</li>
+  <li>Install the "Static Resource Grafter" Chrome extension:
+    <ol>
+      <li>Go to the "Extensions" tab of Chrome's settings panel.</li>
+      <li>Enable "Developer mode".</li>
+      <li>Using the "Load unpacked extension…" button pick the <code>extension</code> directory</li>
+    </ol>
+  </li>
+  <li>Start the local "development" server
+    <ol>
+      <li>Go into the <code>static-resource-grafting</code> directory.</li>
+      <li>Run <code>python -m SimpleHTTPServer 8000</code>.</li>
+      <li>Verify that <a href="http://localhost:8000/grafted/">http://localhost:8000/grafted/</a> shows the two files that are to be grafted.</li>
+    </ol>
+  </li>
+  <li>Reload this page.</li>
+  <li>Observe that the two demo paragraphs below now indicate that they have been "grafted."</li>
+</ol>
+
+<h2>Script Grafting</h2>
+
+<p id="script-output"></p>
+
+<h2>Style Grafting</h2>
+
+<p id="style-output">
+  If styles have been grafted then this paragraph will have a green outline.
+</p>
+
+</body>
+</html>

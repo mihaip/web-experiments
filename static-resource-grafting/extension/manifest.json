@@ -1,0 +1,13 @@
+{
+    "manifest_version": 2,
+    "name": "Static Resource Grafter",
+    "version": "1.0",
+    "permissions": [
+        "webRequest",
+        "webRequestBlocking",
+        "http://persistent.info/web-experiments/static-resource-grafting/*"
+    ],
+    "background": {
+        "scripts": ["background.js"]
+    }
+}
