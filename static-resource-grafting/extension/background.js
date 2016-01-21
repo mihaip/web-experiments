@@ -1,5 +1,4 @@
 var GRAFT_URLS = {
-    // JS
     "http://persistent.info/web-experiments/static-resource-grafting/site/script.js":
         "http://localhost:8000/grafted/script.js",
     "http://persistent.info/web-experiments/static-resource-grafting/site/styles.css":
@@ -13,9 +12,7 @@ chrome.webRequest.onBeforeRequest.addListener(
             return {redirectUrl: graftedUrl};
         }
     },
-    {
-        urls: Object.keys(GRAFT_URLS)
-    },
+    {urls: Object.keys(GRAFT_URLS)},
     ["blocking"]);
 
 chrome.webRequest.onHeadersReceived.addListener(
@@ -24,7 +21,7 @@ chrome.webRequest.onHeadersReceived.addListener(
         for (var i = 0; i < details.responseHeaders.length; i++) {
             var header = details.responseHeaders[i];
             if (header.name.toLowerCase() === "content-security-policy") {
-                header.value = '';
+                header.value = "";
                 strippedCsp = true;
                 break;
             }
@@ -36,9 +33,7 @@ chrome.webRequest.onHeadersReceived.addListener(
     },
     {
         types: ["main_frame"],
-        urls: [
-            "http://persistent.info/web-experiments/static-resource-grafting/*"
-        ]
+        urls: ["http://persistent.info/web-experiments/static-resource-grafting/*"]
     },
     ["blocking", "responseHeaders"]);
 
