@@ -1,0 +1,23 @@
+body {
+  font-family: Helvetica, Arial, san-serif;
+  font-size: 13px;
+  color: #000;
+  background: #fff;
+}
+
+h1 {
+  margin: 0;
+}
+
+#counters td {
+    padding: 2px;
+}
+
+#counters .label {
+    text-align: right;
+}
+
+#counters .output {
+    font-family: monospace;
+    text-align: right;
+}

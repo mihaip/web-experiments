@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Performance.now() and sleep</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <script src="script.js"></script>
+</head>
+<body>
+
+<h1><code>Performance.now()</code> and sleep</h1>
+
+<p>Demo of <a href="http://blog.persistent.info/2016/11/performance-now-sleep.html">Perils of Measuring Long Intervals With <code>Performance.now()</code></a>.</p>
+
+<table id="counters">
+  <tr>
+    <td class="label">Elapsed time per <code>Performance.now()</code>:</td>
+    <td class="output" id="performance-now-output">0ms</td>
+  </tr>
+  <tr>
+    <td class="label">Elapsed time per <code>Date.now()</code>:</td>
+    <td class="output" id="date-now-output">0ms</td>
+  </tr>
+  <tr>
+    <td class="label">Difference:</td>
+    <td class="output" id="difference-output">0ms</td>
+</table>
+
+<h2>Instructions</h2>
+
+<ol>
+  <li>Observe that the elapsed time for both methods are the same (within a few milliseconds)</li>
+  <li>Put the computer to sleep for a least a minute</li>
+  <li>Wake up the computer</li>
+  <li>Observe that the <code>Performance.now()</code>-based time is now significantly behind.</li>
+</ol>
+
+</body>
+</html>
