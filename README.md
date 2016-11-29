@@ -2,6 +2,10 @@
 
 Various prototypes, experiments and proofs of concept that have appeared on [persistent.info](http://blog.persistent.info/) over the years. Some may no longer be applicable, but here they are archived for posterity.
 
+* `Performance.now()` and sleep - _November 2016_
+  * [Source](https://github.com/mihaip/web-experiments/tree/master/performance-now-sleep)
+  * [Web Demo](http://persistent.info/web-experiments/performance-now-sleep)
+  * [Blog post](http://blog.persistent.info/2016/11/performance-now-sleep.html)
 * Static Resource Grafting - _January 2016_
   * [Source](https://github.com/mihaip/web-experiments/tree/master/static-resource-grafting)
   * [Web Demo](http://persistent.info/web-experiments/static-resource-grafting/site/)
