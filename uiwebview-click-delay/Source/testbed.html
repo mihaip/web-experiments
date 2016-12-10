@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width">
+        <style>
+          body {
+            background: #eee;
+            font-family: -apple-system;
+          }
+
+          button {
+            border: solid 1px #ccc;
+            border-radius: 4px;
+            margin: 0 0 4px 0;
+            padding: 4px 8px;
+            font-size: 14px;
+            background: #fff;
+          }
+
+          button:active {
+            background: #ddd;
+          }
+        </style>
+    </head>
+    <body>
+        <button>Tap Me</button>
+        <div>
+          Time between <code>touchend</code> and <code>click</code>:
+          <span id="output"></span>
+        </div>
+        <script>
+          var touchEndTime;
+          ontouchend = function(e) {
+            touchEndTime = performance.now();
+          };
+
+          document.querySelector("button").onclick = function(e) {
+            var clickTime = performance.now();
+            document.querySelector("#output").textContent =
+              (clickTime - touchEndTime).toFixed(2) + "ms";
+          };
+        </script>
+    </body>
+</html>
