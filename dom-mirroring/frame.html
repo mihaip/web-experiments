@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>DOM Mirroring - Frame</title>
+    <style>
+      body {
+        background: #eee;
+        font-family: Helvetica;
+      }
+
+      h1 {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-weight: bold;
+        font-size: 18px;
+        color: #aaa;
+        margin: 0;
+      }
+
+      .panel {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 200px;
+        height: 200px;
+        background: #ffe;
+        border-radius: 5px;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .panel .center {
+        text-align: center;
+        margin-top: 80px;
+      }
+
+      button.move {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        padding: 0;
+        background: #fff;
+        border: solid 1px #eee;
+        border-radius: 10px;
+        font-size: 10px;
+        font-family: Helvetica;
+        outline: 0;
+      }
+
+      button.move.up {
+        top: 4px;
+        left: 50%;
+        margin-left: -10px;
+      }
+
+      button.move.down {
+        bottom: 4px;
+        left: 50%;
+        margin-left: -10px;
+      }
+
+      button.move.left {
+        top: 50%;
+        margin-top: -10px;
+        left: 4px;
+      }
+
+      button.move.right {
+        top: 50%;
+        margin-top: -10px;
+        right: 4px;
+      }
+
+      button.mirror {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+      }
+
+      .click-me {
+        background: #fff;
+        border: solid 1px #eee;
+        border-radius: 10px;
+        font-size: 14px;
+        font-family: Helvetica;
+        outline: 0;
+      }
+
+      .click-me-output {
+        font-size: 10px;
+      }
+    </style>
+    <script src="dom-mirroring.js"></script>
+    <script src="dom-mirroring-frame.js"></script>
+  </head>
+  <body>
+    <h1>Frame</h1>
+    <div class="panel">
+      <button class="move up">↑</button>
+      <button class="move down">↓</button>
+      <button class="move left">←</button>
+      <button class="move right">→</button>
+
+      <div class="center">
+        <button class="click-me">Click Me</button>
+        <div class="click-me-output"></div>
+      </div>
+    </div>
+
+    <button class="mirror">Mirror in Host</button>
+
+    <script src="frame.js"></script>
+  </body>
+</html>

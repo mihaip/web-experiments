@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>DOM Mirroring - Host</title>
+    <style>
+      h1 {
+        font-family: Helvetica;
+        font-weight: bold;
+        font-size: 18px;
+        color: #aaa;
+        margin: 0;
+      }
+
+      .file-url-warning {
+        color: #f99;
+      }
+
+      iframe {
+        width: 300px;
+        height: 300px;
+        border: 0;
+        outline: dashed 2px #ddd;
+        margin: 100px;
+      }
+    </style>
+    <script src="dom-mirroring.js"></script>
+    <script src="dom-mirroring-host.js"></script>
+  </head>
+  <body>
+    <h1>Host</h1>
+    <iframe src="frame.html" sandbox="allow-scripts"></iframe>
+
+
+    <script src="host.js"></script>
+  </body>
+</html>
