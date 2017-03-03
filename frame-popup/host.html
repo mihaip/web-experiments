@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Frame Popup - Host</title>
+    <style>
+      h1 {
+        font-family: Helvetica;
+        font-weight: bold;
+        font-size: 18px;
+        color: #aaa;
+        margin: 0;
+      }
+
+      .file-url-warning {
+        color: #f99;
+      }
+
+      .frame {
+        width: 300px;
+        height: 300px;
+        border: 0;
+        outline: dashed 2px #ddd;
+        margin: 100px;
+      }
+
+      .popup {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 200px;
+        height: 200px;
+        border: 0;
+      }
+    </style>
+    <script src="frame-popup.js"></script>
+    <script src="frame-popup-host.js"></script>
+  </head>
+  <body>
+    <h1>Host</h1>
+    <iframe class="frame" src="frame.html" sandbox="allow-scripts allow-popups"></iframe>
+    <iframe class="frame" src="frame.html"></iframe>
+
+    <script src="host.js"></script>
+  </body>
+</html>
