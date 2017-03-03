@@ -1,5 +1,3 @@
-// Copyright 2017 Quip
-
 var domMirroring = {};
 
 /** @enum {number} */

@@ -18,14 +18,14 @@ document.querySelector("button.move.right").onclick =
     updatePanel.bind(null, 10, 0);
 
 document.querySelector(".mirror").onclick = function() {
-  domMirroring.startSending(panelNode);
+    domMirroring.startSending(panelNode);
 };
 
 
 var clickMeNode = document.querySelector(".click-me");
 var clickMeOutputNode = document.querySelector(".click-me-output");
 function showEventType(event) {
-  clickMeOutputNode.textContent = "Last Event: " + event.type;
+    clickMeOutputNode.textContent = "Last Event: " + event.type;
 }
 ["mousedown", "mouseup", "click"].forEach(eventType =>
     clickMeNode.addEventListener(eventType, showEventType))

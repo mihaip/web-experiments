@@ -1,3 +1,6 @@
+/**
+ * @param {Node} callback
+ */
 domMirroring.startReceiving = function(frameNode) {
     var mirrorNode;
     window.addEventListener("message", function(e) {
