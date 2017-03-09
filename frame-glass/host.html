@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Frame Glass - Host</title>
+    <style>
+      body {
+        position: relative;
+        font-family: Helvetica;
+      }
+
+      h1, h2 {
+        font-weight: bold;
+      }
+
+      h1 {
+        font-size: 18px;
+        color: #aaa;
+        margin: 0;
+      }
+
+      h2 {
+        font-size: 14px;
+      }
+
+      label {
+        background: #eee;
+        border-radius: 4px;
+        position: absolute;
+        top: 4px;
+        right: 8px;
+        padding: 1px 2px;
+        z-index: 2;
+      }
+
+      .file-url-warning {
+        color: #f99;
+      }
+
+      iframe {
+        border: 0;
+      }
+
+      iframe:not(.glass-mode),
+      .frame-placeholder {
+        display: block;
+        width: 300px;
+        height: 300px;
+        outline: dashed 2px #ddd;
+        margin: 10px auto;
+      }
+
+      iframe.glass-mode {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      a {
+        text-decoration: none;
+        color: #00f;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      a.mousedown {
+        background-color: rgba(0, 0, 255, 0.3);
+      }
+
+      a.clicked {
+        color: #0f0;
+      }
+
+      .cover {
+        position: absolute;
+        box-sizing: border-box;
+        z-index: 1;
+      }
+
+      .cover.disabled {
+        pointer-events: none;
+      }
+
+      .debug-cover .cover:not(.disabled) {
+        border: solid 1px rgba(0, 255, 0, 0.3);
+        background: rgba(0, 255, 0, 0.1);
+      }
+    </style>
+    <script src="frame-glass.js"></script>
+    <script src="frame-glass-host.js"></script>
+  </head>
+  <body>
+    <h1>Host</h1>
+
+    <label><input type="checkbox" class="debug-cover-toggle">Debug Cover</label>
+
+    <p>Lorem ipsum dolor sit amet, consectetur <a href="#">adipiscing</a> elit. Phasellus mauris odio, convallis ut faucibus et, tempor nec sapien. Pellentesque venenatis hendrerit ligula, a vulputate augue. Duis egestas metus erat, sit amet <a href="#">scelerisque</a> diam tempor eget.</p>
+
+    <h2>Cras Vitae Posuere Nulla</h2>
+
+    <p>In sit amet neque felis. Vestibulum ac <a href="#">magna</a> pretium, ultrices enim a, bibendum lacus. Quisque ac feugiat nibh. Nullam lobortis enim augue, eu fringilla lorem molestie in. Suspendisse euismod, ex vel aliquet dignissim, urna lorem aliquet justo, eu <a href="#">lobortis</a> lacus sem sit amet est. Vestibulum vehicula lectus urna, quis laoreet enim maximus et. Sed a lectus iaculis, fermentum tortor quis, egestas felis. Fusce consectetur fermentum lacus id maximus. Morbi sollicitudin luctus egestas. Pellentesque sit amet commodo ipsum. Curabitur a libero urna.</p>
+
+    <iframe src="client.html" sandbox="allow-scripts"></iframe>
+
+    <p>Donec non tincidunt nibh, a gravida libero. Sed quis felis pulvinar, sollicitudin purus in, <a href="#">lobortis risus</a>. Phasellus id hendrerit erat. Nullam lectus libero, gravida non suscipit eget, iaculis at leo. Mauris et dolor et magna condimentum condimentum. Curabitur ac quam ac dui egestas convallis.</p>
+
+    <h2>Fusce Quis Euismod Enim</h2>
+
+    <p>Maecenas rhoncus urna et ipsum rutrum, ac iaculis sapien elementum.</p>
+
+    <p>Ut vitae ornare purus. Aenean laoreet at arcu <a href="#">vitae sodales</a>. Integer sed condimentum magna. Cras a ipsum dolor. Sed arcu eros, lacinia quis diam et, tempor rhoncus urna. Nunc et magna et ex hendrerit fermentum. Etiam lacus orci, scelerisque eu rhoncus a, commodo id felis. Vestibulum lacinia vestibulum rutrum. Donec quis odio interdum, pellentesque justo accumsan, auctor dolor. Nulla facilisi. Praesent consectetur vestibulum nibh, sit amet tempor mauris gravida ut. Aenean ac vestibulum dolor.</p>
+
+    <p>Pellentesque in erat eget ipsum malesuada tempus. Pellentesque egestas faucibus tellus ut gravida. Suspendisse potenti. Duis vitae varius orci. Sed sagittis leo eget urna congue fringilla. Nullam sit amet nisl sit amet erat semper vulputate. Ut ex nisi, aliquam sit amet bibendum eu, faucibus quis velit. Integer blandit mauris ut felis vulputate, vel bibendum est facilisis. Maecenas ultrices sapien at lacinia cursus. Aenean rhoncus quam id mauris tincidunt, at varius sapien convallis. Quisque vel turpis ac dolor tincidunt malesuada. Nam blandit hendrerit nisl sit amet tempor. Curabitur vehicula odio eget diam fermentum varius.</p>
+
+    <p>Duis nec vulputate metus, et pretium leo. Nulla at massa congue, porttitor odio ut, rhoncus nunc. Integer venenatis ante in nisl interdum posuere. Nunc maximus augue a leo dignissim, posuere consectetur nulla vehicula. Cras sapien leo, ornare sed mauris quis, accumsan vestibulum ligula. Nam non sollicitudin risus. Nulla pharetra eleifend dignissim. Curabitur tincidunt dictum nulla in varius. Aliquam aliquam velit turpis, a interdum tellus hendrerit eu. Vestibulum fermentum risus nec nibh imperdiet, ut pharetra mi fermentum.</p>
+
+    <p>Nullam et nunc facilisis, consectetur lorem a, facilisis est. Quisque aliquet dui id tellus blandit facilisis. Praesent pharetra augue eu sapien blandit, at interdum arcu lobortis. In auctor sollicitudin laoreet. Donec libero urna, congue vel massa at, fermentum sollicitudin tellus. Sed a orci nec odio viverra venenatis id eu lorem. Praesent feugiat, sapien eget ultrices sodales, purus tellus pharetra velit, vitae varius eros magna ac ipsum. Suspendisse pellentesque convallis magna et convallis. Suspendisse potenti. Proin a odio eget lorem tempor auctor. Donec eleifend faucibus ante, vitae eleifend lorem hendrerit eget. Aenean ultricies, diam sed sagittis cursus, est ipsum tristique nulla, sit amet suscipit felis felis sit amet felis. In efficitur venenatis arcu, a sodales mi tristique nec. Aenean arcu odio, imperdiet hendrerit nulla eget, imperdiet aliquet dolor.</p>
+
+    <p>Sed hendrerit dolor neque, sed vestibulum lacus fermentum non. Nam ultrices porta turpis vitae gravida. Maecenas et rhoncus est. Aliquam erat volutpat. Phasellus vitae condimentum dolor, sed sodales magna. Cras at nisi sed ipsum convallis ullamcorper nec aliquet turpis. Integer finibus varius velit non rhoncus. Aenean fermentum libero nec enim sagittis elementum. Nam eu dapibus augue, sagittis elementum quam. Phasellus sodales placerat mauris, convallis rhoncus libero dapibus ac. Proin at sapien pulvinar ipsum semper malesuada. Donec quis ultrices dui, sed lacinia ex. Nullam lacus erat, tempus sit amet urna in, maximus consequat felis. Praesent imperdiet libero sed tortor tempor, quis commodo tellus placerat.</p>
+
+    <p>Maecenas et pharetra justo. Pellentesque vel mattis lectus, vel iaculis augue. Suspendisse ac ante nulla. Vivamus commodo elit eu semper congue. Phasellus viverra posuere quam, vitae ultricies velit feugiat vel. Donec ullamcorper nisl sapien. Aliquam non nulla vitae libero ultrices pharetra id id urna. Donec hendrerit ex ac neque semper pretium. Fusce vehicula iaculis diam, ut auctor ipsum rutrum at. Integer volutpat ipsum non ullamcorper vulputate.</p>
+
+    <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis laoreet egestas maximus. Donec aliquet, lorem ut ultrices cursus, odio lectus vehicula est, eget ultrices libero odio commodo mauris. Praesent facilisis dapibus fermentum. Praesent porttitor erat vitae tincidunt commodo. Etiam gravida dolor in purus tincidunt tristique. Fusce imperdiet eget ante non cursus. Mauris dictum tortor imperdiet, rhoncus lorem sit amet, luctus enim. Aenean consequat viverra ullamcorper. Cras tempor elit nisi, vitae tristique massa pharetra quis. Vivamus bibendum orci at libero euismod pulvinar. Etiam sodales turpis vel quam tempor, at porttitor libero tempor. Donec eget cursus libero.</p>
+
+    <script src="host.js"></script>
+  </body>
+</html>
