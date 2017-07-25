@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Frame Scrolling</title>
+  <style>
+    body {
+      font-family: Helvetica;
+    }
+
+    iframe {
+      width: 200px;
+      height: 200px;
+      border: dotted 2px #ccc;
+      margin: 5px;
+    }
+  </style>
+  <script>
+    function addFrame(withParameter) {
+      var iframe = document.createElement("iframe");
+      iframeUrl = "frame.html";
+      var hashArgs = "";
+      if (withParameter) {
+        hashArgs += "param=true";
+      }
+      iframeUrl += "#" + hashArgs;
+      iframe.src = iframeUrl;
+      document.querySelector(".iframe-container").append(iframe);
+    };
+  </script>
+</head>
+
+<body>
+  <h1>Host</h1>
+
+  <p>Test case of a mysterious WebKit behavior that was investigated via <code>lldb</code>.</p>
+
+  <button onClick="addFrame(true)">Add Frame With Parameter</button>
+  <button onClick="addFrame(false)">Add Frame Without Parameter</button>
+
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas id felis erat. Nam a ligula ac neque varius rutrum. Quisque
+    at justo id metus cursus feugiat vel et arcu. Nullam facilisis scelerisque lorem. Nulla sed ex magna. Quisque eget massa
+    sit amet est tristique placerat at in urna. Donec bibendum velit tortor, nec luctus dui ultricies ut. In malesuada posuere
+    sollicitudin. Vestibulum consequat, lorem in imperdiet posuere, orci quam sagittis enim, tristique iaculis urna nunc
+    sed libero.</p>
+
+  <p>Ut ac venenatis ligula. Vestibulum at risus sed metus tristique rhoncus sed et sapien. Vestibulum at suscipit tortor. Duis
+    elementum venenatis mi, ac consequat velit. Maecenas dignissim condimentum turpis et porta. Class aptent taciti sociosqu
+    ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris iaculis laoreet finibus. Morbi gravida dolor id
+    purus congue, et dignissim dolor convallis. Morbi mattis ultrices felis a vulputate. Fusce blandit ipsum et placerat
+    semper. Fusce ornare ultricies augue, quis lobortis est efficitur eget. Suspendisse et ornare tellus. Donec at varius
+    ex. Donec blandit ultricies ex id varius. Etiam ultrices nec mauris a consequat.</p>
+
+  <div class="iframe-container"></div>
+
+  <p>Donec dignissim feugiat lacus, vel fermentum arcu porttitor in. Curabitur scelerisque nulla quam, sed facilisis libero
+    lacinia in. Ut eget justo dolor. Aenean mollis venenatis erat quis consectetur. Maecenas tellus libero, viverra et lobortis
+    quis, bibendum sit amet massa. Donec hendrerit consequat luctus. Donec vel elit vitae libero imperdiet lobortis. In consequat
+    nibh et sem cursus condimentum. Phasellus et felis congue, mattis felis quis, vestibulum lacus. Nulla pulvinar enim id
+    feugiat rhoncus.</p>
+
+  <p>Maecenas sed velit non tellus placerat placerat. Quisque dolor mi, imperdiet lobortis ante in, dignissim suscipit neque.
+    Nam a lectus eros. Pellentesque odio nulla, molestie sed condimentum vitae, bibendum non orci. Fusce eget turpis posuere,
+    rhoncus erat at, semper enim. Pellentesque venenatis rhoncus nunc ut tempor. Praesent eu nunc ut ligula vestibulum egestas
+    ac non neque. Nulla eget vestibulum ligula, et sollicitudin sem. Quisque at justo at sem lacinia rutrum. Cras commodo
+    sagittis fringilla. Proin laoreet erat eget eros ultricies, sagittis ultrices nunc vestibulum.</p>
+
+  <p>Ut at suscipit dolor, sed sollicitudin elit. Nunc a tempor magna. Vestibulum ante ipsum primis in faucibus orci luctus
+    et ultrices posuere cubilia Curae; Vivamus sit amet laoreet odio, nec interdum tellus. Vivamus aliquet molestie vestibulum.
+    Sed vel porttitor est. Maecenas cursus quam nec erat ornare congue. Vivamus pharetra bibendum nisl eu aliquam. Suspendisse
+    sodales aliquet magna vitae aliquet. Integer scelerisque risus vel facilisis consequat. Vivamus tempus nisl id quam condimentum,
+    porta mollis justo eleifend.</p>
+
+  <p>Praesent tristique bibendum auctor. Donec dui erat, maximus vitae tellus non, ullamcorper bibendum mauris. Maecenas finibus
+    eget purus sit amet volutpat. Sed sit amet faucibus justo. Phasellus vitae justo eu sapien tincidunt consectetur. In
+    blandit metus vel mollis accumsan. Praesent efficitur arcu ipsum, eu lacinia dui interdum consequat. Interdum et malesuada
+    fames ac ante ipsum primis in faucibus. Nunc rutrum ipsum lacus, auctor pulvinar lorem dictum in.</p>
+
+  <p>Praesent finibus lorem a tortor scelerisque, vel iaculis dolor finibus. Nullam sed tellus lacus. Quisque accumsan erat
+    at dolor cursus sagittis. Sed ex leo, viverra nec nisi et, semper commodo lacus. Ut sit amet dui mollis, lacinia diam
+    id, volutpat tellus. Sed ut ex facilisis, tempus dolor ac, eleifend metus. Maecenas quam magna, pulvinar quis elementum
+    quis, dapibus quis felis. Phasellus a condimentum ex. Sed urna elit, auctor vitae lobortis vitae, egestas a nibh.</p>
+
+  <p>Mauris eleifend in nulla quis euismod. Vestibulum in congue nulla. Quisque orci arcu, lacinia id vehicula lacinia, consectetur
+    ac turpis. Aliquam congue eros felis, ut ultrices ante ultricies sit amet. Donec maximus, velit nec pulvinar dictum,
+    turpis lacus consectetur quam, quis iaculis purus neque quis magna. Ut sit amet accumsan quam. Morbi sit amet urna ut
+    ipsum ultrices congue id et lectus.</p>
+
+  <p>Vestibulum varius, purus ac laoreet vulputate, massa orci iaculis libero, sodales consequat elit odio ac velit. Maecenas
+    lacinia lacinia turpis a blandit. Phasellus eget varius ligula. Mauris pretium vestibulum velit. Nunc vulputate nunc
+    nunc, sit amet fringilla enim lobortis rutrum. Maecenas ut mi elit. Ut ac suscipit ex. Nunc ut justo dui. Pellentesque
+    mi metus, gravida eget convallis at, tincidunt pharetra risus. Integer mollis, nunc at semper aliquam, libero ex pharetra
+    mauris, sed feugiat ex lectus sit amet mauris. Duis ut massa at lacus viverra pretium.</p>
+
+  <p>Phasellus eleifend, dui id elementum sollicitudin, elit lorem vehicula arcu, eu varius massa massa ac lacus. Donec ut vehicula
+    dolor. Sed non odio orci. Donec ultricies, dui ut efficitur vulputate, nisl justo consequat risus, vel blandit neque
+    lacus a ante. Duis molestie interdum ex, quis faucibus elit bibendum ac. Donec ac elementum dui, vel pretium libero.
+    Aenean egestas ultricies est, non pellentesque libero feugiat et. Aenean a tortor nec leo imperdiet pharetra. Vestibulum
+    pellentesque tincidunt sapien sed accumsan. Sed in neque non libero pretium luctus vitae et arcu. Aliquam gravida porttitor
+    ante at tristique. Fusce pharetra purus mattis libero euismod ullamcorper. Suspendisse id feugiat quam. Nulla ac libero
+    pharetra libero cursus lobortis eget in nisi. Pellentesque vitae est euismod, bibendum neque eget, feugiat enim.</p>
+
+<p>Donec dignissim feugiat lacus, vel fermentum arcu porttitor in. Curabitur scelerisque nulla quam, sed facilisis libero
+    lacinia in. Ut eget justo dolor. Aenean mollis venenatis erat quis consectetur. Maecenas tellus libero, viverra et lobortis
+    quis, bibendum sit amet massa. Donec hendrerit consequat luctus. Donec vel elit vitae libero imperdiet lobortis. In consequat
+    nibh et sem cursus condimentum. Phasellus et felis congue, mattis felis quis, vestibulum lacus. Nulla pulvinar enim id
+    feugiat rhoncus.</p>
+
+  <p>Maecenas sed velit non tellus placerat placerat. Quisque dolor mi, imperdiet lobortis ante in, dignissim suscipit neque.
+    Nam a lectus eros. Pellentesque odio nulla, molestie sed condimentum vitae, bibendum non orci. Fusce eget turpis posuere,
+    rhoncus erat at, semper enim. Pellentesque venenatis rhoncus nunc ut tempor. Praesent eu nunc ut ligula vestibulum egestas
+    ac non neque. Nulla eget vestibulum ligula, et sollicitudin sem. Quisque at justo at sem lacinia rutrum. Cras commodo
+    sagittis fringilla. Proin laoreet erat eget eros ultricies, sagittis ultrices nunc vestibulum.</p>
+
+  <p>Ut at suscipit dolor, sed sollicitudin elit. Nunc a tempor magna. Vestibulum ante ipsum primis in faucibus orci luctus
+    et ultrices posuere cubilia Curae; Vivamus sit amet laoreet odio, nec interdum tellus. Vivamus aliquet molestie vestibulum.
+    Sed vel porttitor est. Maecenas cursus quam nec erat ornare congue. Vivamus pharetra bibendum nisl eu aliquam. Suspendisse
+    sodales aliquet magna vitae aliquet. Integer scelerisque risus vel facilisis consequat. Vivamus tempus nisl id quam condimentum,
+    porta mollis justo eleifend.</p>
+
+  <p>Praesent tristique bibendum auctor. Donec dui erat, maximus vitae tellus non, ullamcorper bibendum mauris. Maecenas finibus
+    eget purus sit amet volutpat. Sed sit amet faucibus justo. Phasellus vitae justo eu sapien tincidunt consectetur. In
+    blandit metus vel mollis accumsan. Praesent efficitur arcu ipsum, eu lacinia dui interdum consequat. Interdum et malesuada
+    fames ac ante ipsum primis in faucibus. Nunc rutrum ipsum lacus, auctor pulvinar lorem dictum in.</p>
+
+  <p>Praesent finibus lorem a tortor scelerisque, vel iaculis dolor finibus. Nullam sed tellus lacus. Quisque accumsan erat
+    at dolor cursus sagittis. Sed ex leo, viverra nec nisi et, semper commodo lacus. Ut sit amet dui mollis, lacinia diam
+    id, volutpat tellus. Sed ut ex facilisis, tempus dolor ac, eleifend metus. Maecenas quam magna, pulvinar quis elementum
+    quis, dapibus quis felis. Phasellus a condimentum ex. Sed urna elit, auctor vitae lobortis vitae, egestas a nibh.</p>
+
+  <p>Mauris eleifend in nulla quis euismod. Vestibulum in congue nulla. Quisque orci arcu, lacinia id vehicula lacinia, consectetur
+    ac turpis. Aliquam congue eros felis, ut ultrices ante ultricies sit amet. Donec maximus, velit nec pulvinar dictum,
+    turpis lacus consectetur quam, quis iaculis purus neque quis magna. Ut sit amet accumsan quam. Morbi sit amet urna ut
+    ipsum ultrices congue id et lectus.</p>
+
+  <p>Vestibulum varius, purus ac laoreet vulputate, massa orci iaculis libero, sodales consequat elit odio ac velit. Maecenas
+    lacinia lacinia turpis a blandit. Phasellus eget varius ligula. Mauris pretium vestibulum velit. Nunc vulputate nunc
+    nunc, sit amet fringilla enim lobortis rutrum. Maecenas ut mi elit. Ut ac suscipit ex. Nunc ut justo dui. Pellentesque
+    mi metus, gravida eget convallis at, tincidunt pharetra risus. Integer mollis, nunc at semper aliquam, libero ex pharetra
+    mauris, sed feugiat ex lectus sit amet mauris. Duis ut massa at lacus viverra pretium.</p>
+
+  <p>Phasellus eleifend, dui id elementum sollicitudin, elit lorem vehicula arcu, eu varius massa massa ac lacus. Donec ut vehicula
+    dolor. Sed non odio orci. Donec ultricies, dui ut efficitur vulputate, nisl justo consequat risus, vel blandit neque
+    lacus a ante. Duis molestie interdum ex, quis faucibus elit bibendum ac. Donec ac elementum dui, vel pretium libero.
+    Aenean egestas ultricies est, non pellentesque libero feugiat et. Aenean a tortor nec leo imperdiet pharetra. Vestibulum
+    pellentesque tincidunt sapien sed accumsan. Sed in neque non libero pretium luctus vitae et arcu. Aliquam gravida porttitor
+    ante at tristique. Fusce pharetra purus mattis libero euismod ullamcorper. Suspendisse id feugiat quam. Nulla ac libero
+    pharetra libero cursus lobortis eget in nisi. Pellentesque vitae est euismod, bibendum neque eget, feugiat enim.</p>
+  </body>
+
+</html>

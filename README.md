@@ -2,6 +2,9 @@
 
 Various prototypes, experiments and proofs of concept that have appeared on [persistent.info](http://blog.persistent.info/) over the years. Some may no longer be applicable, but here they are archived for posterity.
 
+* Understanding WebKit behavior via `lldb` - _July 2017_
+  * [Source](https://github.com/mihaip/web-experiments/tree/master/frame-scrolling)
+  * [Blog post](http://blog.persistent.info/2017/07/understanding-webkit-behavior-lldb.html)
 * Disabling the `click` delay in `UIWebView` - _January 2017_
   * [Source](https://github.com/mihaip/web-experiments/tree/master/uiwebview-click-delay)
   * [Blog post](http://blog.persistent.info/2017/01/disabling-click-delay-in-uiwebview.html)
