@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scaling</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+
+  <h1>Scaling</h1>
+
+  <p>Target width: <code id="target-width-output"></code>. Display width: <code id="display-width-output"></code>.</p>
+
+  <template id="element-template">
+    <div class="element-container">
+      <h3></h3>
+
+      <div class="element">
+        <h2>Title</h2>
+        <p>Text: Consectetur adipiscing elit. Cras feugiat sapien eu mi rhoncus mollis. Sed vulputate et dui vehicula maximus. Maecenas porttitortortor in ex maximus, ut pretium erat pulvinar.</p>
+        <div class="output">
+            Title <code>marginBottom</code>: <code class="margin-bottom-output"></code>.<br>
+            Text <code>offsetHeight</code>: <code class="offset-height-output"></code>.<br>
+            Text <code>getBoundingClientRect().height</code>: <code class="client-rect-height-output"></code>.<br>
+          </div>
+      </div>
+    </div>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
