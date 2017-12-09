@@ -7,7 +7,8 @@ function update() {
 
     updateTransformElement(displayWidth);
     updateZoomElement(displayWidth);
-    updateScaledElement(displayWidth);
+    updateStyleScaledElement(displayWidth);
+    updateSvgScaledElement(displayWidth);
 
     document.querySelectorAll(".element").forEach(updateElementMetrics);
 
@@ -25,15 +26,15 @@ function updateZoomElement(displayWidth) {
     zoomElementNode.style.zoom = scale;
 }
 
-function updateScaledElement(displayWidth) {
+function updateStyleScaledElement(displayWidth) {
     const scale = value => value * (displayWidth / TARGET_WIDTH);
-    var styleNode = scaledElementNode.querySelector("style");
+    let styleNode = styleScaledElementNode.querySelector("style");
     if (!styleNode) {
         styleNode = document.createElement("style");
-        scaledElementNode.appendChild(styleNode);
+        styleScaledElementNode.appendChild(styleNode);
     }
-    scaledElementNode.classList.add("scaled");
-    scaledElementNode.style.width = displayWidth + "px";
+    styleScaledElementNode.classList.add("scaled");
+    styleScaledElementNode.style.width = displayWidth + "px";
 
     styleNode.textContent = `
     .element.scaled {
@@ -55,6 +56,31 @@ function updateScaledElement(displayWidth) {
         font-size: ${scale(10)}px;
     }
 `;
+}
+
+function updateSvgScaledElement(displayWidth) {
+    const scale = displayWidth / TARGET_WIDTH;
+    const createSvgElement = tagName =>
+        document.createElementNS("http://www.w3.org/2000/svg", tagName);
+
+    if (svgScaledElementNode.parentNode.tagName != "foreignObject") {
+        const foreignObjectNode = createSvgElement("foreignObject");
+        const svgElement = createSvgElement("svg");
+        svgScaledElementNode.parentNode.replaceChild(
+            svgElement, svgScaledElementNode);
+        svgElement.appendChild(foreignObjectNode);
+        foreignObjectNode.appendChild(svgScaledElementNode);
+    }
+
+    const foreignObjectNode = svgScaledElementNode.parentNode;
+    foreignObjectNode.setAttribute("transform", "scale(" + scale + ")");
+
+    const svgElement = foreignObjectNode.parentNode;
+    svgElement.setAttribute("width", displayWidth);
+    svgElement.setAttribute(
+        "height", scale * svgScaledElementNode.offsetHeight);
+    foreignObjectNode.setAttribute("width", TARGET_WIDTH);
+    foreignObjectNode.setAttribute("height", svgScaledElementNode.offsetHeight);
 }
 
 function updateElementMetrics(elementNode) {
@@ -81,7 +107,8 @@ function addScaledElement(label) {
 }
 
 const zoomElementNode = addScaledElement("CSS Zoom");
-const scaledElementNode = addScaledElement("Scaled Styles");
+const styleScaledElementNode = addScaledElement("Scaled Styles");
+const svgScaledElementNode = addScaledElement("SVG Scale");
 
 // Last one so that it doesn't end up overlapping with anything below when
 // scaled up.
