@@ -17,7 +17,7 @@ function update() {
 
 function updateTransformElement(displayWidth) {
     const scale = displayWidth / TARGET_WIDTH;
-    transformElementNode.style.transform = `scale3d(${scale}, ${scale}, 1)`;
+    transformElementNode.style.transform = `scale(${scale}, ${scale})`;
     transformElementNode.style.transformOrigin = "top left";
 }
 
