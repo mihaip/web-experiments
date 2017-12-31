@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Inline JSON</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+  <body>
+    <h1>Inline JSON Data Loading</h1>
+    <label>
+      JSON Data Size:
+      <select id="max-depth">
+        <option value="1">Tiny</option>
+        <option value="2">Small</option>
+        <option value="3">Medium</option>
+        <option value="4" selected>Large</option>
+      </select>
+    </label>
+    <label>
+      Runs:
+      <select id="runs">
+          <option value="1">1</option>
+          <option value="10">10</option>
+          <option value="100">100</option>
+        </select>
+    </label>
+
+    <button id="test">Test</button>
+
+    <pre id="log"></pre>
+
+    <script src="script.js"></script>
+  </body>
+</html>
