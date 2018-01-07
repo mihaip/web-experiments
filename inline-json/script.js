@@ -2,7 +2,7 @@ const MAX_ARRAY_SIZE = 13;
 
 document.querySelector("#test").onclick = e => {
     const jsonString = JSON.stringify(generateJsonData());
-    const jsHtml = `<script>handleData(${jsonString});</script>`;
+    const jsHtml = `<script>handleData(${jsonString});noop();</script>`;
     const inertHtml = `
     <script type="application/json">${jsonString}</script>
     <script>
@@ -117,6 +117,10 @@ function runTest(testHtml, callback) {
                 data: data[0],
                 parseTime: performance.now() - startTime
             }, "*");
+        }
+        function noop() {
+          // Dummy function to also call so that JavaScriptCore's JSONP
+          // detection doesn't kick in.
         }
         </script>
         ${testHtml.replace('"DATE_PLACEHOLDER"', Date.now())}
