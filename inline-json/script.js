@@ -105,7 +105,7 @@ function runTests(jsHtml, inertHtml, dataSize, completionCallback) {
 }
 
 function runTest(testHtml, callback) {
-    const dataUrl = `data:text/html,<!DOCTYPE html>
+    const documentHtml = `<!DOCTYPE html>
 <html>
     <head>
         <script>
@@ -127,13 +127,17 @@ function runTest(testHtml, callback) {
         const totalTime = performance.now() - startTime;
         const {parseTime} = e.data;
         iframeNode.remove();
+        URL.revokeObjectURL(blobUrl);
         window.onmessage = undefined;
         callback({parseTime, totalTime});
     };
     const iframeNode = document.createElement("iframe");
     iframeNode.style.display = "none";
     const startTime = performance.now();
-    iframeNode.src = dataUrl;
+
+    const blob = new Blob([documentHtml], {type: "text/html"});
+    var blobUrl = URL.createObjectURL(blob);
+    iframeNode.src = blobUrl;
     document.body.appendChild(iframeNode);
 };
 
