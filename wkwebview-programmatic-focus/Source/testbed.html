@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width">
+        <style>
+          body {
+            background: #eee;
+            font-family: -apple-system;
+          }
+
+          button {
+            border: solid 1px #ccc;
+            border-radius: 4px;
+            margin: 0 0 4px 0;
+            padding: 4px 8px;
+            font-size: 14px;
+            background: #fff;
+          }
+
+          button:active {
+            background: #ddd;
+          }
+        </style>
+    </head>
+    <body>
+        <button>Focus Me (now)</button>
+        <button>Focus Me (soon)</button>
+        <div contentEditable="true">
+          Focus should end up here.
+        </div>
+        <script>
+          const [focusNowButton, focusSoonButton] = document.querySelectorAll("button");
+          const doFocus = () => document.querySelector("div[contentEditable]").focus();
+          focusNowButton.onclick = doFocus;
+          focusSoonButton.onclick = () => setTimeout(doFocus, 100);
+        </script>
+    </body>
+</html>

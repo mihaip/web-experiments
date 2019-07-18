@@ -1,0 +1,326 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		820CDFC91DF78A400086D674 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 820CDFC81DF78A400086D674 /* main.m */; };
+		820CDFCC1DF78A400086D674 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 820CDFCB1DF78A400086D674 /* AppDelegate.m */; };
+		820CDFCF1DF78A400086D674 /* TestbedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 820CDFCE1DF78A400086D674 /* TestbedViewController.m */; };
+		820CDFDF1DF78BA50086D674 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 820CDFDE1DF78BA50086D674 /* LaunchScreen.storyboard */; };
+		820CDFE21DF78D170086D674 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 820CDFE11DF78D170086D674 /* WebKit.framework */; };
+		820CDFE41DF78D520086D674 /* testbed.html in Resources */ = {isa = PBXBuildFile; fileRef = 820CDFE31DF78D520086D674 /* testbed.html */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		820CDFC41DF78A400086D674 /* WKWebView Programatic Focus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WKWebView Programatic Focus.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		820CDFC81DF78A400086D674 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		820CDFCA1DF78A400086D674 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		820CDFCB1DF78A400086D674 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		820CDFCD1DF78A400086D674 /* TestbedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestbedViewController.h; sourceTree = "<group>"; };
+		820CDFCE1DF78A400086D674 /* TestbedViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestbedViewController.m; sourceTree = "<group>"; };
+		820CDFD81DF78A400086D674 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		820CDFDE1DF78BA50086D674 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		820CDFE11DF78D170086D674 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		820CDFE31DF78D520086D674 /* testbed.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = testbed.html; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		820CDFC11DF78A400086D674 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				820CDFE21DF78D170086D674 /* WebKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		820CDFBB1DF78A400086D674 = {
+			isa = PBXGroup;
+			children = (
+				820CDFC61DF78A400086D674 /* Source */,
+				820CDFC51DF78A400086D674 /* Products */,
+				820CDFE01DF78D170086D674 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		820CDFC51DF78A400086D674 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				820CDFC41DF78A400086D674 /* WKWebView Programatic Focus.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		820CDFC61DF78A400086D674 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				820CDFDE1DF78BA50086D674 /* LaunchScreen.storyboard */,
+				820CDFCA1DF78A400086D674 /* AppDelegate.h */,
+				820CDFCB1DF78A400086D674 /* AppDelegate.m */,
+				820CDFCD1DF78A400086D674 /* TestbedViewController.h */,
+				820CDFCE1DF78A400086D674 /* TestbedViewController.m */,
+				820CDFD81DF78A400086D674 /* Info.plist */,
+				820CDFC71DF78A400086D674 /* Supporting Files */,
+				820CDFE31DF78D520086D674 /* testbed.html */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		820CDFC71DF78A400086D674 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				820CDFC81DF78A400086D674 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		820CDFE01DF78D170086D674 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				820CDFE11DF78D170086D674 /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		820CDFC31DF78A400086D674 /* WKWebView Programatic Focus */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 820CDFDB1DF78A400086D674 /* Build configuration list for PBXNativeTarget "WKWebView Programatic Focus" */;
+			buildPhases = (
+				820CDFC01DF78A400086D674 /* Sources */,
+				820CDFC11DF78A400086D674 /* Frameworks */,
+				820CDFC21DF78A400086D674 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "WKWebView Programatic Focus";
+			productName = "UIWebView Click Delay";
+			productReference = 820CDFC41DF78A400086D674 /* WKWebView Programatic Focus.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		820CDFBC1DF78A400086D674 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = persistent.info;
+				TargetAttributes = {
+					820CDFC31DF78A400086D674 = {
+						CreatedOnToolsVersion = 8.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 820CDFBF1DF78A400086D674 /* Build configuration list for PBXProject "WKWebView Programmatic Focus" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 820CDFBB1DF78A400086D674;
+			productRefGroup = 820CDFC51DF78A400086D674 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				820CDFC31DF78A400086D674 /* WKWebView Programatic Focus */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		820CDFC21DF78A400086D674 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				820CDFE41DF78D520086D674 /* testbed.html in Resources */,
+				820CDFDF1DF78BA50086D674 /* LaunchScreen.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		820CDFC01DF78A400086D674 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				820CDFCF1DF78A400086D674 /* TestbedViewController.m in Sources */,
+				820CDFCC1DF78A400086D674 /* AppDelegate.m in Sources */,
+				820CDFC91DF78A400086D674 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		820CDFD91DF78A400086D674 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		820CDFDA1DF78A400086D674 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		820CDFDC1DF78A400086D674 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Source/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "info.persistent.WKWebView-Programmatic-Focus";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		820CDFDD1DF78A400086D674 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Source/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "info.persistent.WKWebView-Programmatic-Focus";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		820CDFBF1DF78A400086D674 /* Build configuration list for PBXProject "WKWebView Programmatic Focus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				820CDFD91DF78A400086D674 /* Debug */,
+				820CDFDA1DF78A400086D674 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		820CDFDB1DF78A400086D674 /* Build configuration list for PBXNativeTarget "WKWebView Programatic Focus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				820CDFDC1DF78A400086D674 /* Debug */,
+				820CDFDD1DF78A400086D674 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 820CDFBC1DF78A400086D674 /* Project object */;
+}
