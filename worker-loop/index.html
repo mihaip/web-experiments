@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Infinite Loop Worker</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+  <body>
+    <h1>Infinite Loop Worker</h1>
+
+    <p>This page has a simple dedicated worker that is an infinite loop and never yields to the event loop. However, it's still possible to communicate with it without <code>SharedArrayBuffer</code> and <code>Atomics</code> via <code>importScripts</code> requests that are handled by a service worker.</p>
+
+    <button id="get-iterations-button">Get Iterations</button>
+    <button id="measure-command-latency-button">Measure Command Latency</button>
+    <button id="stop-button">Stop</button>
+
+    <pre id="log"></pre>
+
+    <script src="shared.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+body {
+    font-family: Helvetica, Arial, san-serif;
+    font-size: 13px;
+    color: #000;
+    background: #fff;
+}
+
+#log {
+    white-space: pre-wrap;
+}
