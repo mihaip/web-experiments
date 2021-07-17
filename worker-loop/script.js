@@ -35,7 +35,7 @@ function log(message) {
 }
 
 navigator.serviceWorker
-    .register("/service-worker.js")
+    .register("./service-worker.js")
     .then(function(registration) {
         log("Service worker registered");
         if (registration.installing) {

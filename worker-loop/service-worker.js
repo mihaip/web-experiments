@@ -28,7 +28,7 @@ self.addEventListener("message", event => {
 
 self.addEventListener("fetch", event => {
     const requestUrl = new URL(event.request.url);
-    if (requestUrl.pathname === "/worker-commands.js") {
+    if (requestUrl.pathname.endsWith("/worker-commands.js")) {
         workerCommands = [];
         event.respondWith(currentFetchResponse);
         currentFetchResponse = constructResponse([]);
