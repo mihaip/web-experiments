@@ -2,6 +2,12 @@
 
 Various prototypes, experiments and proofs of concept that have appeared on [persistent.info](http://blog.persistent.info/) over the years. Some may no longer be applicable, but here they are archived for posterity.
 
+* Communicating With a Web Worker Without Yielding To The Event Loop - _August 2021_
+  * [Source](https://github.com/mihaip/web-experiments/tree/master/worker-loop)
+  * [Blog post](https://blog.persistent.info/2021/08/worker-loop.html)
+* Efficiently Loading Inlined JSON Data - _January 2018_
+  * [Source](https://github.com/mihaip/web-experiments/tree/master/inline-json)
+  * [Blog post](https://blog.persistent.info/2018/01/efficiently-loading-inlined-json-data.html)
 * Understanding WebKit behavior via `lldb` - _July 2017_
   * [Source](https://github.com/mihaip/web-experiments/tree/master/frame-scrolling)
   * [Blog post](http://blog.persistent.info/2017/07/understanding-webkit-behavior-lldb.html)
